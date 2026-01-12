@@ -95,7 +95,7 @@
         </div>
         <div id="quiz-container" class="space-y-6"></div>
         <div class="flex justify-center mt-8">
-            <button id="btn-finalizar-quiz" disabled class="px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
+            <button id="btn-finalizar-quiz" onclick="finalizarDiagnostico()" disabled class="px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
                 Finalizar Diagnóstico
             </button>
         </div>
@@ -338,6 +338,7 @@
             }
             
             localStorage.setItem('cybergrinder_answers', JSON.stringify(answers));
+            localStorage.setItem('dnaCompleted', 'true');
             calcularPerfil();
         }
         
@@ -370,7 +371,7 @@
         }
         
         function mostrarResultado(perfil, operadorId) {
-            document.getElementById('mod-quiz').classList.add('hidden');
+            document.getElementById('modulo-1').classList.add('hidden');
             document.getElementById('mod-processamento').classList.remove('hidden');
             
             const msgs = [
