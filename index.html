@@ -224,6 +224,10 @@
         ];
 
         // ==================== ESTADO GLOBAL ====================
+        // ==================== ESTADO DO QUIZ ====================
+        let currentQuestion = 0;
+        const totalQuestions = 50;
+        const answers = new Array(totalQuestions).fill(null);
         const dnaAnswers = {};
         let userId = null;
         let userProfile = null;
@@ -258,53 +262,83 @@
 
         // ==================== MÓDULO 1: QUIZ ====================
         function startQuiz() {
+            renderizarPergunta(0);
+        }
+
+        function renderizarPergunta(index) {
             const container = document.getElementById('quiz-container');
             container.innerHTML = '';
             
-            perguntas.forEach((item, i) => {
-                let div = document.createElement('div');
-                div.className = "p-6 border border-gray-900 rounded-lg bg-gray-950 fade-in";
-                div.style.animationDelay = `${i * 0.1}s`;
-                
-                let questionHTML = `
-                    <p class="mb-4 text-sm font-bold text-gray-300">
-                        <span class="text-green-400">[${i + 1}/5]</span> ${item.q}
-                    </p>
-                    <div class="space-y-2">
-                        ${item.options.map((opt, idx) => `
-                            <button onclick="saveAnswer(${item.id}, '${opt.replace(/'/g, "\\'")}', ${idx}, this)" 
+            const item = perguntas[index];
+            let div = document.createElement('div');
+            div.className = "p-6 border border-gray-900 rounded-lg bg-gray-950";
+            
+            let questionHTML = `
+                <p class="mb-4 text-sm font-bold text-gray-300">
+                    <span class="text-green-400">[${index + 1}/${totalQuestions}]</span> ${item.q}
+                </p>
+                <div class="space-y-2">
+                    ${item.options.map((opt, idx) => `
+                        <button onclick="selectAnswer(${idx})" 
                                 class="option-btn w-full text-left p-3 text-xs border border-gray-800 rounded transition-all">
                                 ${opt}
                             </button>
                         `).join('')}
-                    </div>
-                `;
-                div.innerHTML = questionHTML;
-                container.appendChild(div);
-            });
+                </div>
+                <div class="mt-4">
+                    <button id="btn-proxima" onclick="nextQuestion()" disabled class="w-full p-3 text-sm font-bold border border-gray-800 rounded transition-all opacity-50 cursor-not-allowed">
+                        PRÓXIMA PERGUNTA
+                    </button>
+                </div>
+            `;
+            div.innerHTML = questionHTML;
+            container.appendChild(div);
             
-            checkQuizCompletion();
-        }
-
-        function saveAnswer(id, val, optionIndex, btnElement) {
-            const parentDiv = btnElement.parentElement;
-            parentDiv.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
-            });
-            
-            btnElement.classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
-            
-            dnaAnswers['q' + id] = String.fromCharCode(65 + optionIndex);
-            
-            verificarProgresso();
-        }
-
-        function verificarProgresso() {
-            const totalRespostas = Object.keys(dnaAnswers).length;
-            
-            if(totalRespostas === 5) {
-                calcularPerfil();
+            if(answers[index] !== null) {
+                const btns = div.querySelectorAll('.option-btn');
+                btns[answers[index]].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
+                btns.forEach(btn => btn.disabled = true);
+                document.getElementById('btn-proxima').disabled = false;
+                document.getElementById('btn-proxima').classList.remove('opacity-50', 'cursor-not-allowed');
+                document.getElementById('btn-proxima').classList.add('border-green-500', 'text-green-400');
             }
+        }
+
+        function selectAnswer(optionIndex) {
+            if(answers[currentQuestion] !== null) return;
+            
+            answers[currentQuestion] = optionIndex;
+            
+            const btns = document.querySelectorAll('.option-btn');
+            btns[optionIndex].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
+            btns.forEach(btn => btn.disabled = true);
+            
+            const btnProxima = document.getElementById('btn-proxima');
+            btnProxima.disabled = false;
+            btnProxima.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnProxima.classList.add('border-green-500', 'text-green-400');
+        }
+
+        function nextQuestion() {
+            if(answers[currentQuestion] === null) return;
+            
+            currentQuestion++;
+            
+            if(currentQuestion === totalQuestions) {
+                finalizarQuiz();
+                return;
+            }
+            
+            renderizarPergunta(currentQuestion);
+        }
+        
+        function finalizarQuiz() {
+            if(answers.includes(null)) {
+                alert('⚠️ Responda todas as perguntas antes de finalizar!');
+                return;
+            }
+            
+            calcularPerfil();
         }
         
         function calcularPerfil() {
@@ -315,10 +349,14 @@
             }
             
             const counts = {A: 0, B: 0, C: 0};
-            Object.values(dnaAnswers).forEach(ans => counts[ans]++);
+            answers.forEach((ansIdx, i) => {
+                const letra = String.fromCharCode(65 + ansIdx);
+                counts[letra]++;
+                dnaAnswers['q' + (i+1)] = letra;
+            });
             
             let perfil = '';
-            const percA = (counts.A / 5) * 100;
+            const percA = (counts.A / totalQuestions) * 100;
             
             if(percA >= 80) perfil = 'Blindado';
             else if(counts.A > counts.B && counts.A > counts.C) perfil = 'Estrategista';
