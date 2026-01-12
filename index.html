@@ -78,7 +78,7 @@
     <!-- MÓDULO 0: MANIFESTO DE BLINDAGEM -->
     <section id="mod-manifesto" class="max-w-2xl text-center space-y-6">
         <header class="opacity-40 text-xs tracking-[0.3em] mb-12 uppercase">Blindagem de Patrimônio</header>
-        <button id="btn-iniciar" class="mb-8 px-12 py-5 border-2 border-green-500 text-green-400 rounded bg-black hover:bg-green-950 transition-all duration-300 uppercase text-base tracking-wider font-bold pulse-border neon-text">
+        <button id="btn-iniciar" onclick="iniciarSistema()" class="mb-8 px-12 py-5 border-2 border-green-500 text-green-400 rounded bg-black hover:bg-green-950 transition-all duration-300 uppercase text-base tracking-wider font-bold pulse-border neon-text">
             ⚡ INICIAR SISTEMA ⚡
         </button>
         <div id="manifesto-text" class="space-y-4 text-sm md:text-base leading-relaxed"></div>
@@ -178,7 +178,7 @@
         // ==================== CONFIGURAÇÃO SUPABASE ====================
         const SUPABASE_URL = "https://njrjrugjzjyukcpzwibt.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcmpydWdqemp5dWtjcHp3aWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY2MzI0NzksImV4cCI6MjA1MjIwODQ3OX0.iy_Ux-kKaLUlCUVDXI0MfYLjQYPzNrCVVNy_iiJaLmU";
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        let supabase = null; // Será inicializado quando necessário
 
         // ==================== DADOS DO SISTEMA ====================
         const manifesto = [
@@ -346,6 +346,10 @@
 
         async function salvarDadosSupabase() {
             try {
+                // Inicializar Supabase se ainda não foi
+                if (!supabase) {
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                }
                 // Calcular score
                 const score = Object.values(respostas).reduce((acc, r) => acc + r.peso, 0);
                 const maxScore = 15;
@@ -401,6 +405,11 @@
         }
 
         document.getElementById('btn-salvar-log').onclick = async () => {
+            // Inicializar Supabase se ainda não foi
+            if (!supabase) {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
+            
             const ganhos = parseFloat(document.getElementById('input-ganhos').value) || 0;
             const perdas = parseFloat(document.getElementById('input-perdas').value) || 0;
             const observacoes = document.getElementById('input-observacoes').value;
@@ -443,6 +452,10 @@
 
         async function carregarHistorico() {
             try {
+                // Inicializar Supabase se ainda não foi
+                if (!supabase) {
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                }
                 const { data, error } = await supabase
                     .from('user_logs')
                     .select('*')
@@ -485,16 +498,12 @@
             }
         }
 
-        // ==================== INICIALIZAÇÃO ====================
-        // Conectar botão INICIAR SISTEMA com typeManifesto
-        document.getElementById('btn-iniciar').addEventListener('click', function() {
-            // Ocultar botão iniciar
+        // ==================== FUNÇÃO DE INICIALIZAÇÃO ====================
+        function iniciarSistema() {
             document.getElementById('btn-iniciar').classList.add('hidden');
-            // Mostrar botão aceitar
             document.getElementById('btn-aceitar').classList.remove('hidden');
-            // Iniciar typewriter
             typeManifesto();
-        });
+        }
     </script>
 </body>
 </html>
