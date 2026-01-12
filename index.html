@@ -189,44 +189,73 @@
             "Eu sou o Chip. Sua mente será blindada."
         ];
 
+        // BLOCO 1: Logística e Setup (10 Questões)
         const perguntas = [
-            { 
-                id: 1, 
-                q: "Qual sua reação após um bad beat de 2 buy-ins?", 
-                options: ["Foco no próximo range", "Aumento o volume pra recuperar", "Fecho o software"],
-                peso: [3, 1, 2]
-            },
-            { 
-                id: 2, 
-                q: "Você respeita seu Stop Loss diário?", 
-                options: ["Sempre", "Às vezes", "O que é Stop Loss?"],
-                peso: [3, 2, 0]
-            },
-            { 
-                id: 3, 
-                q: "Quantas horas de estudo técnico por semana?", 
-                options: ["Mais de 5h", "Menos de 2h", "Só jogo"],
-                peso: [3, 1, 0]
-            },
-            { 
-                id: 4, 
-                q: "Sua banca suporta quantos buy-ins do limite atual?", 
-                options: ["+100 bi", "50 bi", "Estou no fio da navalha"],
-                peso: [3, 2, 0]
-            },
-            { 
-                id: 5, 
-                q: "Você joga sob efeito de cansaço ou álcool?", 
-                options: ["Nunca", "Raramente", "Frequentemente"],
-                peso: [3, 1, 0]
-            }
+            { pergunta: "Backup Internet:", opcoes: [{ texto: "4G/5G ativo", pontos: 10 }, { texto: "Celular perto", pontos: 5 }, { texto: "Sem backup", pontos: 0 }] },
+            { pergunta: "Hardware:", opcoes: [{ texto: "Topo de linha", pontos: 10 }, { texto: "Médio", pontos: 5 }, { texto: "Trava/Lento", pontos: 0 }] },
+            { pergunta: "Ambiente:", opcoes: [{ texto: "Escritório isolado", pontos: 10 }, { texto: "Quarto", pontos: 5 }, { texto: "Sala/Público", pontos: 0 }] },
+            { pergunta: "Telas:", opcoes: [{ texto: "2 ou +", pontos: 10 }, { texto: "1 tela", pontos: 5 }, { texto: "Notebook", pontos: 0 }] },
+            { pergunta: "Softwares:", opcoes: [{ texto: "Domina HUD/Solver", pontos: 10 }, { texto: "Usa básico", pontos: 5 }, { texto: "Não usa", pontos: 0 }] },
+            { pergunta: "Ergonomia:", opcoes: [{ texto: "Profissional", pontos: 10 }, { texto: "Cadeira comum", pontos: 5 }, { texto: "Sofá/Cama", pontos: 0 }] },
+            { pergunta: "Foco Auditivo:", opcoes: [{ texto: "Música foco", pontos: 10 }, { texto: "Podcast", pontos: 5 }, { texto: "TV/Ruído", pontos: 0 }] },
+            { pergunta: "Rotina Pré-Grind:", opcoes: [{ texto: "Meditação/Ritual", pontos: 10 }, { texto: "Às vezes", pontos: 5 }, { texto: "Nunca", pontos: 0 }] },
+            { pergunta: "Energia Física:", opcoes: [{ texto: "Descansado", pontos: 10 }, { texto: "Cansado", pontos: 5 }, { texto: "Exausto", pontos: 0 }] },
+            { pergunta: "Alimentação:", opcoes: [{ texto: "Planejada", pontos: 10 }, { texto: "Aleatória", pontos: 5 }, { texto: "Má qualidade", pontos: 0 }] },
+            // BLOCO 2: DNA Emocional/Psicológico (15 Questões)
+            { pergunta: "Bad Beat:", opcoes: [{ texto: "Próxima mão", pontos: 10 }, { texto: "Irrita", pontos: 5 }, { texto: "Tilt/Fecha o jogo", pontos: 0 }] },
+            { pergunta: "Stop Loss:", opcoes: [{ texto: "Respeito total", pontos: 10 }, { texto: "Tento recuperar", pontos: 5 }, { texto: "Sem limite", pontos: 0 }] },
+            { pergunta: "Ansiedade Reta Final:", opcoes: [{ texto: "Foco", pontos: 10 }, { texto: "Nervoso", pontos: 5 }, { texto: "Erro por pressão", pontos: 0 }] },
+            { pergunta: "Disciplina:", opcoes: [{ texto: "Rígida", pontos: 10 }, { texto: "Flexível", pontos: 5 }, { texto: "Sem horários", pontos: 0 }] },
+            { pergunta: "Foco Longo Prazo:", opcoes: [{ texto: "Analiso o mês", pontos: 10 }, { texto: "Analiso a semana", pontos: 5 }, { texto: "Sofro com o dia", pontos: 0 }] },
+            { pergunta: "Resiliência:", opcoes: [{ texto: "Supero rápido", pontos: 10 }, { texto: "Demoro a recuperar", pontos: 5 }, { texto: "Fico abalado dias", pontos: 0 }] },
+            { pergunta: "Controle de Impulso:", opcoes: [{ texto: "Total controle", pontos: 10 }, { texto: "Às vezes erro", pontos: 5 }, { texto: "Impulsivo", pontos: 0 }] },
+            { pergunta: "Autoestima:", opcoes: [{ texto: "Confiante", pontos: 10 }, { texto: "Oscila", pontos: 5 }, { texto: "Baixa", pontos: 0 }] },
+            { pergunta: "Gestão de Tilt:", opcoes: [{ texto: "Paro e respiro", pontos: 10 }, { texto: "Continuo nervoso", pontos: 5 }, { texto: "Perco controle", pontos: 0 }] },
+            { pergunta: "Pressão de Resultado:", opcoes: [{ texto: "Jogo igual", pontos: 10 }, { texto: "Muda um pouco", pontos: 5 }, { texto: "Desespero", pontos: 0 }] },
+            { pergunta: "Autocrítica:", opcoes: [{ texto: "Construtiva", pontos: 10 }, { texto: "Dura demais", pontos: 5 }, { texto: "Me culpo sempre", pontos: 0 }] },
+            { pergunta: "Motivação:", opcoes: [{ texto: "Consistente", pontos: 10 }, { texto: "Oscila", pontos: 5 }, { texto: "Baixa", pontos: 0 }] },
+            { pergunta: "Gestão de Expectativa:", opcoes: [{ texto: "Realista", pontos: 10 }, { texto: "Às vezes exagero", pontos: 5 }, { texto: "Expectativas irreais", pontos: 0 }] },
+            { pergunta: "Equilíbrio Vida/Poker:", opcoes: [{ texto: "Balanceado", pontos: 10 }, { texto: "Poker domina", pontos: 5 }, { texto: "Sem equilíbrio", pontos: 0 }] },
+            { pergunta: "Mindset:", opcoes: [{ texto: "Crescimento", pontos: 10 }, { texto: "Misto", pontos: 5 }, { texto: "Fixo/Limitado", pontos: 0 }] },
+            // BLOCO 3: Técnica e Fundamentos (15 Questões)
+            { pergunta: "Ranges Open Raise:", opcoes: [{ texto: "Estudados", pontos: 10 }, { texto: "Intuitivos", pontos: 5 }, { texto: "Aleatórios", pontos: 0 }] },
+            { pergunta: "Defesa de Blinds:", opcoes: [{ texto: "Domina matemática", pontos: 10 }, { texto: "Defende muito", pontos: 5 }, { texto: "Passivo", pontos: 0 }] },
+            { pergunta: "ICM:", opcoes: [{ texto: "Domina pressões", pontos: 10 }, { texto: "Básico", pontos: 5 }, { texto: "Não aplica", pontos: 0 }] },
+            { pergunta: "Revisão de Mãos:", opcoes: [{ texto: "Diária", pontos: 10 }, { texto: "Semanal", pontos: 5 }, { texto: "Nunca", pontos: 0 }] },
+            { pergunta: "GTO vs Exploit:", opcoes: [{ texto: "Balanço perfeito", pontos: 10 }, { texto: "Mais GTO", pontos: 5 }, { texto: "Não sei a diferença", pontos: 0 }] },
+            { pergunta: "3Bet Pots:", opcoes: [{ texto: "Domino ranges", pontos: 10 }, { texto: "Jogo básico", pontos: 5 }, { texto: "Evito", pontos: 0 }] },
+            { pergunta: "C-Bet:", opcoes: [{ texto: "Frequência estudada", pontos: 10 }, { texto: "Intuitivo", pontos: 5 }, { texto: "Sempre ou nunca", pontos: 0 }] },
+            { pergunta: "Pot Odds:", opcoes: [{ texto: "Calculo sempre", pontos: 10 }, { texto: "Às vezes", pontos: 5 }, { texto: "Não calculo", pontos: 0 }] },
+            { pergunta: "Equity:", opcoes: [{ texto: "Domino conceito", pontos: 10 }, { texto: "Básico", pontos: 5 }, { texto: "Não sei", pontos: 0 }] },
+            { pergunta: "Sizings:", opcoes: [{ texto: "Otimizados", pontos: 10 }, { texto: "Padrão", pontos: 5 }, { texto: "Aleatórios", pontos: 0 }] },
+            { pergunta: "Reads:", opcoes: [{ texto: "Anoto e uso", pontos: 10 }, { texto: "Observo", pontos: 5 }, { texto: "Não faço", pontos: 0 }] },
+            { pergunta: "Ajustes por Posição:", opcoes: [{ texto: "Domino todos", pontos: 10 }, { texto: "Básico", pontos: 5 }, { texto: "Jogo igual", pontos: 0 }] },
+            { pergunta: "River Play:", opcoes: [{ texto: "Confiante", pontos: 10 }, { texto: "Inseguro", pontos: 5 }, { texto: "Erro muito", pontos: 0 }] },
+            { pergunta: "Bluff Catching:", opcoes: [{ texto: "Domino", pontos: 10 }, { texto: "Às vezes acerto", pontos: 5 }, { texto: "Não sei", pontos: 0 }] },
+            { pergunta: "Stack-off Ranges:", opcoes: [{ texto: "Estudados", pontos: 10 }, { texto: "Intuitivos", pontos: 5 }, { texto: "Aleatórios", pontos: 0 }] },
+            // BLOCO 4: Histórico e Gestão (10 Questões)
+            { pergunta: "Bankroll:", opcoes: [{ texto: "100+ BIs", pontos: 10 }, { texto: "50 BIs", pontos: 5 }, { texto: "No tiro", pontos: 0 }] },
+            { pergunta: "Volume:", opcoes: [{ texto: "Meta batida", pontos: 10 }, { texto: "Oscila", pontos: 5 }, { texto: "Baixo", pontos: 0 }] },
+            { pergunta: "Estudo:", opcoes: [{ texto: "1h/dia", pontos: 10 }, { texto: "2h/semana", pontos: 5 }, { texto: "Não estuda", pontos: 0 }] },
+            { pergunta: "Networking:", opcoes: [{ texto: "Ativo em comunidades", pontos: 10 }, { texto: "Participo às vezes", pontos: 5 }, { texto: "Isolado", pontos: 0 }] },
+            { pergunta: "Gestão de Saques:", opcoes: [{ texto: "Planejada", pontos: 10 }, { texto: "Eventual", pontos: 5 }, { texto: "Saco tudo", pontos: 0 }] },
+            { pergunta: "Tracking:", opcoes: [{ texto: "Analiso HUD diário", pontos: 10 }, { texto: "Olho às vezes", pontos: 5 }, { texto: "Não uso", pontos: 0 }] },
+            { pergunta: "Metas:", opcoes: [{ texto: "Claras e escritas", pontos: 10 }, { texto: "Vagas", pontos: 5 }, { texto: "Sem metas", pontos: 0 }] },
+            { pergunta: "Investimento em Educação:", opcoes: [{ texto: "Cursos/Coaching", pontos: 10 }, { texto: "Conteúdo gratuito", pontos: 5 }, { texto: "Não invisto", pontos: 0 }] },
+            { pergunta: "Autocrítica Pós-Sessão:", opcoes: [{ texto: "Sempre analiso", pontos: 10 }, { texto: "Às vezes", pontos: 5 }, { texto: "Nunca", pontos: 0 }] },
+            { pergunta: "Visão de Carreira:", opcoes: [{ texto: "Profissional de longo prazo", pontos: 10 }, { texto: "Renda extra", pontos: 5 }, { texto: "Hobby/Diversão", pontos: 0 }] }
         ];
 
-        // ==================== ESTADO GLOBAL ====================
-        // ==================== ESTADO DO QUIZ ====================
+        // ==================== ENGENHARIA DE ESTADO ====================
+        window.dnaSession = {
+            totalQuestions: 50,
+            answeredQuestions: 0,
+            totalScore: 0,
+            answers: new Array(50).fill(null)
+        };
+        
         let currentQuestion = 0;
         const totalQuestions = 50;
-        const answers = new Array(totalQuestions).fill(null);
         const dnaAnswers = {};
         let userId = null;
         let userProfile = null;
@@ -274,13 +303,13 @@
             
             let questionHTML = `
                 <p class="mb-4 text-sm font-bold text-gray-300">
-                    <span class="text-green-400">[${index + 1}/${totalQuestions}]</span> ${item.q}
+                    <span class="text-green-400">[${index + 1}/${totalQuestions}]</span> ${item.pergunta}
                 </p>
                 <div class="space-y-2">
-                    ${item.options.map((opt, idx) => `
+                    ${item.opcoes.map((opt, idx) => `
                         <button onclick="selectAnswer(${idx})" 
                                 class="option-btn w-full text-left p-3 text-xs border border-gray-800 rounded transition-all">
-                                ${opt}
+                                ${opt.texto}
                             </button>
                         `).join('')}
                 </div>
@@ -293,9 +322,9 @@
             div.innerHTML = questionHTML;
             container.appendChild(div);
             
-            if(answers[index] !== null) {
+            if(window.dnaSession.answers[index] !== null) {
                 const btns = div.querySelectorAll('.option-btn');
-                btns[answers[index]].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
+                btns[window.dnaSession.answers[index]].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
                 document.getElementById('btn-proxima').disabled = false;
                 document.getElementById('btn-proxima').classList.remove('opacity-50', 'cursor-not-allowed');
                 document.getElementById('btn-proxima').classList.add('border-green-500', 'text-green-400');
@@ -303,7 +332,20 @@
         }
 
         function selectAnswer(optionIndex) {
-            answers[currentQuestion] = optionIndex;
+            const perguntaAtual = perguntas[currentQuestion];
+            const pontos = perguntaAtual.opcoes[optionIndex].pontos;
+            
+            // Se já tinha resposta, remove os pontos antigos
+            if(window.dnaSession.answers[currentQuestion] !== null) {
+                const pontosAntigos = perguntaAtual.opcoes[window.dnaSession.answers[currentQuestion]].pontos;
+                window.dnaSession.totalScore -= pontosAntigos;
+            } else {
+                window.dnaSession.answeredQuestions++;
+            }
+            
+            // Salva nova resposta e soma pontos
+            window.dnaSession.answers[currentQuestion] = optionIndex;
+            window.dnaSession.totalScore += pontos;
             
             const btns = document.querySelectorAll('.option-btn');
             btns.forEach(btn => {
@@ -315,10 +357,18 @@
             btnProxima.disabled = false;
             btnProxima.classList.remove('opacity-50', 'cursor-not-allowed');
             btnProxima.classList.add('border-green-500', 'text-green-400');
+            
+            // Habilitar botão finalizar se todas as perguntas foram respondidas
+            if(window.dnaSession.answeredQuestions === 50) {
+                const btnFinalizar = document.getElementById('btn-finalizar-quiz');
+                btnFinalizar.disabled = false;
+                btnFinalizar.classList.remove('border-gray-800', 'text-gray-600');
+                btnFinalizar.classList.add('border-green-500', 'text-green-400', 'neon-border', 'pulse-border');
+            }
         }
 
         function nextQuestion() {
-            if(answers[currentQuestion] === null) return;
+            if(window.dnaSession.answers[currentQuestion] === null) return;
             
             currentQuestion++;
             
@@ -331,46 +381,104 @@
             renderizarPergunta(currentQuestion);
         }
         
+        async function salvarNoSupabase(operadorId, totalScore, patente, dnaStatus) {
+            console.log('🔵 [DEBUG] Iniciando salvamento no Supabase...');
+            console.log('🔵 [DEBUG] operadorId:', operadorId);
+            console.log('🔵 [DEBUG] totalScore:', totalScore);
+            console.log('🔵 [DEBUG] patente:', patente);
+            console.log('🔵 [DEBUG] dnaStatus:', dnaStatus);
+            
+            try {
+                // Inicializar Supabase se ainda não foi
+                if (!supabase) {
+                    console.log('🔵 [DEBUG] Inicializando cliente Supabase...');
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                    console.log('🔵 [DEBUG] Cliente Supabase inicializado!');
+                }
+                
+                // Inserir/Atualizar perfil
+                const { data: profileData, error: profileError } = await supabase
+                    .from('user_profiles')
+                    .upsert([{
+                        id: operadorId,
+                        patente: patente,
+                        dna_status: dnaStatus,
+                        score: totalScore
+                    }], { onConflict: 'id' })
+                    .select();
+                
+                if(profileError) {
+                    console.error('❌ [DEBUG] Erro ao salvar perfil:', profileError);
+                    console.error('❌ [DEBUG] Detalhes:', profileError.message, profileError.details, profileError.hint);
+                } else {
+                    console.log('✅ [DEBUG] Perfil salvo com sucesso:', profileData);
+                }
+                
+                // Inserir log do quiz
+                const { error: logError } = await supabase
+                    .from('user_logs')
+                    .insert([{
+                        user_id: operadorId,
+                        tipo: 'quiz_dna',
+                        respostas: window.dnaSession.answers,
+                        score: totalScore
+                    }]);
+                
+                if(logError) {
+                    console.error('❌ [DEBUG] Erro ao inserir log:', logError);
+                    console.error('❌ [DEBUG] Detalhes:', logError.message, logError.details, logError.hint);
+                } else {
+                    console.log('✅ [DEBUG] Log inserido com sucesso!');
+                    alert('✅ Dados Salvos com Sucesso no Supabase!');
+                }
+                
+            } catch(err) {
+                console.error('❌ [DEBUG] Erro geral:', err);
+            }
+        }
+        
         function finalizarDiagnostico() {
-            if(answers.includes(null)) {
-                alert('⚠️ Responda todas as perguntas antes de finalizar!');
+            if(window.dnaSession.answeredQuestions < 50) {
+                alert('⚠️ Responda todas as 50 perguntas antes de finalizar!');
                 return;
             }
             
-            localStorage.setItem('cybergrinder_answers', JSON.stringify(answers));
-            localStorage.setItem('dnaCompleted', 'true');
-            calcularPerfil();
-        }
-        
-        function calcularPerfil() {
+            const totalScore = window.dnaSession.totalScore;
+            let patente = '';
+            let dnaStatus = '';
+            
+            // MATRIZ DE CÁLCULO (O VEREDITO)
+            if(totalScore >= 0 && totalScore <= 150) {
+                patente = 'OBSERVADOR';
+                dnaStatus = 'DNA Reativo';
+            } else if(totalScore >= 151 && totalScore <= 350) {
+                patente = 'OPERADOR';
+                dnaStatus = 'DNA em Formação';
+            } else if(totalScore >= 351 && totalScore <= 500) {
+                patente = 'BLINDADO';
+                dnaStatus = 'DNA de Elite';
+            }
+            
             let operadorId = localStorage.getItem('operador_id');
             if(!operadorId) {
                 operadorId = 'OP-' + Math.random().toString(36).substr(2, 9).toUpperCase();
                 localStorage.setItem('operador_id', operadorId);
             }
             
-            const counts = {A: 0, B: 0, C: 0};
-            answers.forEach((ansIdx, i) => {
-                const letra = String.fromCharCode(65 + ansIdx);
-                counts[letra]++;
-                dnaAnswers['q' + (i+1)] = letra;
-            });
+            // Salvar no localStorage
+            localStorage.setItem('cybergrinder_answers', JSON.stringify(window.dnaSession.answers));
+            localStorage.setItem('cybergrinder_score', totalScore);
+            localStorage.setItem('cybergrinder_patente', patente);
+            localStorage.setItem('cybergrinder_dna_status', dnaStatus);
+            localStorage.setItem('dnaCompleted', 'true');
             
-            let perfil = '';
-            const percA = (counts.A / totalQuestions) * 100;
+            // Salvar no Supabase
+            salvarNoSupabase(operadorId, totalScore, patente, dnaStatus);
             
-            if(percA >= 80) perfil = 'Blindado';
-            else if(counts.A > counts.B && counts.A > counts.C) perfil = 'Estrategista';
-            else if(counts.B > counts.C) perfil = 'Recruta';
-            else perfil = 'Vulnerável';
-            
-            localStorage.setItem('cybergrinder_dna', JSON.stringify(dnaAnswers));
-            localStorage.setItem('cybergrinder_profile', perfil);
-            
-            mostrarResultado(perfil, operadorId);
+            mostrarResultado(patente, dnaStatus, operadorId, totalScore);
         }
         
-        function mostrarResultado(perfil, operadorId) {
+        function mostrarResultado(patente, dnaStatus, operadorId, totalScore) {
             document.getElementById('modulo-1').classList.add('hidden');
             document.getElementById('mod-processamento').classList.remove('hidden');
             
@@ -379,7 +487,7 @@
                 'Calculando resistência emocional...',
                 'Mapeando vulnerabilidades...',
                 'Processando DNA do operador...',
-                'Perfil identificado: ' + perfil
+                'Veredito: ' + patente + ' | Score: ' + totalScore + ' pts'
             ];
             
             let idx = 0;
@@ -393,8 +501,8 @@
                     setTimeout(() => {
                         document.getElementById('mod-processamento').classList.add('hidden');
                         document.getElementById('mod-dashboard').classList.remove('hidden');
-                        document.getElementById('patente-value').innerText = 'Observador';
-                        document.getElementById('dna-value').innerText = perfil;
+                        document.getElementById('patente-value').innerText = patente;
+                        document.getElementById('dna-value').innerText = dnaStatus;
                         document.getElementById('operador-id').innerText = operadorId;
                     }, 1000);
                 }
