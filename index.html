@@ -5,40 +5,179 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CYBER GRINDER | Sistema de Blindagem</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Roboto Mono', monospace; background-color: #000; color: #e5e7eb; overflow-x: hidden; }
-        .neon-border { box-shadow: 0 0 15px rgba(34, 197, 94, 0.4); border-color: #22c55e; }
-        .fade-in { animation: fadeIn 0.5s ease-in forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .hidden { display: none; }
+        body { 
+            font-family: 'JetBrains Mono', monospace; 
+            background-color: #000000; 
+            color: #e5e7eb; 
+            overflow-x: hidden; 
+        }
+        .neon-border { 
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5), 0 0 5px rgba(34, 197, 94, 0.3); 
+            border: 1px solid #22c55e; 
+        }
+        .neon-text {
+            text-shadow: 0 0 10px rgba(34, 197, 94, 0.8), 0 0 20px rgba(34, 197, 94, 0.4);
+        }
+        .fade-in { 
+            animation: fadeIn 0.6s ease-in forwards; 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(34, 197, 94, 0.8); }
+        }
+        .pulse-border {
+            animation: pulse-glow 2s infinite;
+        }
+        .hidden { 
+            display: none; 
+        }
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 1.5s steps(40, end);
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .spinner {
+            border: 3px solid rgba(34, 197, 94, 0.1);
+            border-top: 3px solid #22c55e;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .option-btn {
+            transition: all 0.3s ease;
+        }
+        .option-btn:hover {
+            border-color: #22c55e;
+            background-color: rgba(34, 197, 94, 0.1);
+            transform: translateX(5px);
+        }
+        .option-btn.selected {
+            border-color: #10b981;
+            background-color: rgba(16, 185, 129, 0.2);
+        }
     </style>
 </head>
 <body class="min-h-screen p-6 flex flex-col items-center justify-center">
 
-    <script>
-        const _URL = "https://njrjrugjzjyukcpzwibt.supabase.co";
-        const _KEY = "sb_publishable_IdBN5r7mocZmplhYOlHk9w_0krUOg_E";
-        const supabase = supabase.createClient(_URL, _KEY);
-    </script>
-
+    <!-- MÓDULO 0: MANIFESTO DE BLINDAGEM -->
     <section id="mod-manifesto" class="max-w-2xl text-center space-y-6">
-        <header class="opacity-40 text-xs tracking-[0.3em] mb-12">BLINDAGEM DE PATRIMÔNIO</header>
-        <div id="manifesto-text" class="space-y-2 text-sm md:text-base"></div>
-        <button id="btn-aceitar" disabled class="mt-8 px-8 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500">AGUARDANDO LEITURA...</button>
+        <header class="opacity-40 text-xs tracking-[0.3em] mb-12 uppercase">Blindagem de Patrimônio</header>
+        <div id="manifesto-text" class="space-y-4 text-sm md:text-base leading-relaxed"></div>
+        <button id="btn-aceitar" disabled class="mt-12 px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
+            Aguardando leitura...
+        </button>
     </section>
 
-    <section id="mod-quiz" class="hidden max-w-xl w-full space-y-8 fade-in">
-        <div class="text-center">
-            <h2 class="text-green-400 font-bold text-xl mb-2">DIAGNÓSTICO DE DNA</h2>
+    <!-- MÓDULO 1: QUIZ DE DNA -->
+    <section id="mod-quiz" class="hidden max-w-2xl w-full space-y-8 fade-in">
+        <div class="text-center mb-8">
+            <h2 class="text-green-400 font-bold text-2xl mb-3 neon-text">DIAGNÓSTICO DE DNA</h2>
             <p class="text-gray-500 text-xs uppercase tracking-widest">Responda com frieza. O Chip está analisando.</p>
         </div>
-        <div id="quiz-container" class="space-y-6">
+        <div id="quiz-container" class="space-y-6"></div>
+        <div class="flex justify-center mt-8">
+            <button id="btn-finalizar-quiz" disabled class="px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
+                Finalizar Diagnóstico
+            </button>
+        </div>
+    </section>
+
+    <!-- MÓDULO 2: PROCESSAMENTO DE PERFIL -->
+    <section id="mod-processamento" class="hidden max-w-2xl w-full text-center space-y-8 fade-in">
+        <div class="spinner mx-auto"></div>
+        <h2 class="text-green-400 font-bold text-xl neon-text">PROCESSANDO DNA</h2>
+        <p class="text-gray-500 text-sm">Analisando respostas e calibrando perfil operacional...</p>
+        <div id="processing-status" class="text-xs text-gray-600 space-y-2 mt-6"></div>
+    </section>
+
+    <!-- MÓDULO 3: DASHBOARD DO OPERADOR -->
+    <section id="mod-dashboard" class="hidden max-w-4xl w-full space-y-8 fade-in">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-green-400 neon-text mb-2">CYBER GRINDER</h1>
+            <p class="text-gray-500 text-xs uppercase tracking-widest">Sistema de Blindagem Ativo</p>
+        </header>
+
+        <!-- Status Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Patente -->
+            <div class="p-6 border border-gray-900 rounded-lg neon-border bg-gray-950">
+                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Patente Atual</p>
+                <p id="patente-display" class="text-2xl font-bold text-green-400">Observador</p>
             </div>
+            
+            <!-- Status de DNA -->
+            <div class="p-6 border border-gray-900 rounded-lg neon-border bg-gray-950">
+                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Status de DNA</p>
+                <p id="dna-display" class="text-lg font-bold text-green-400">Analisando...</p>
+            </div>
+            
+            <!-- User ID -->
+            <div class="p-6 border border-gray-900 rounded-lg neon-border bg-gray-950">
+                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Operador ID</p>
+                <p id="user-id-display" class="text-sm font-mono text-gray-400">---</p>
+            </div>
+        </div>
+
+        <!-- Grind Log -->
+        <div class="p-8 border border-gray-900 rounded-lg neon-border bg-gray-950">
+            <h3 class="text-xl font-bold text-green-400 mb-6 neon-text">GRIND LOG</h3>
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Ganhos do Dia (R$)</label>
+                        <input type="number" id="input-ganhos" placeholder="0.00" 
+                            class="w-full p-3 bg-black border border-gray-800 rounded text-green-400 focus:border-green-500 focus:outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Perdas do Dia (R$)</label>
+                        <input type="number" id="input-perdas" placeholder="0.00" 
+                            class="w-full p-3 bg-black border border-gray-800 rounded text-red-400 focus:border-red-500 focus:outline-none transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Observações</label>
+                    <textarea id="input-observacoes" rows="3" placeholder="Descreva sua sessão..." 
+                        class="w-full p-3 bg-black border border-gray-800 rounded text-gray-300 focus:border-green-500 focus:outline-none transition-all resize-none"></textarea>
+                </div>
+                <button id="btn-salvar-log" 
+                    class="w-full px-8 py-4 border border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-black transition-all uppercase text-sm tracking-wider neon-border">
+                    Registrar Sessão
+                </button>
+            </div>
+        </div>
+
+        <!-- Log History -->
+        <div class="p-8 border border-gray-900 rounded-lg bg-gray-950">
+            <h3 class="text-xl font-bold text-gray-400 mb-6">HISTÓRICO DE SESSÕES</h3>
+            <div id="log-history" class="space-y-3 max-h-96 overflow-y-auto">
+                <p class="text-sm text-gray-600 text-center py-8">Nenhuma sessão registrada ainda.</p>
+            </div>
+        </div>
     </section>
 
     <script>
+        // ==================== CONFIGURAÇÃO SUPABASE ====================
+        const SUPABASE_URL = "https://njrjrugjzjyukcpzwibt.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcmpydWdqemp5dWtjcHp3aWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY2MzI0NzksImV4cCI6MjA1MjIwODQ3OX0.iy_Ux-kKaLUlCUVDXI0MfYLjQYPzNrCVVNy_iiJaLmU";
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ==================== DADOS DO SISTEMA ====================
         const manifesto = [
             "O baralho não tem memória. Eu tenho.",
             "O baralho não sente nada. Você sente.",
@@ -48,65 +187,303 @@
         ];
 
         const perguntas = [
-            { id: 1, q: "Qual sua reação após um bad beat de 2 buy-ins?", options: ["Foco no próximo range", "Aumento o volume pra recuperar", "Fecho o software"] },
-            { id: 2, q: "Você respeita seu Stop Loss diário?", options: ["Sempre", "Às vezes", "O que é Stop Loss?"] },
-            { id: 3, q: "Quantas horas de estudo técnico por semana?", options: ["Mais de 5h", "Menos de 2h", "Só jogo"] },
-            { id: 4, q: "Sua banca suporta quantos buy-ins do limite atual?", options: ["+100 bi", "50 bi", "Estou no fio da navalha"] },
-            { id: 5, q: "Você joga sob efeito de cansaço ou álcool?", options: ["Nunca", "Raramente", "Frequentemente"] }
+            { 
+                id: 1, 
+                q: "Qual sua reação após um bad beat de 2 buy-ins?", 
+                options: ["Foco no próximo range", "Aumento o volume pra recuperar", "Fecho o software"],
+                peso: [3, 1, 2]
+            },
+            { 
+                id: 2, 
+                q: "Você respeita seu Stop Loss diário?", 
+                options: ["Sempre", "Às vezes", "O que é Stop Loss?"],
+                peso: [3, 2, 0]
+            },
+            { 
+                id: 3, 
+                q: "Quantas horas de estudo técnico por semana?", 
+                options: ["Mais de 5h", "Menos de 2h", "Só jogo"],
+                peso: [3, 1, 0]
+            },
+            { 
+                id: 4, 
+                q: "Sua banca suporta quantos buy-ins do limite atual?", 
+                options: ["+100 bi", "50 bi", "Estou no fio da navalha"],
+                peso: [3, 2, 0]
+            },
+            { 
+                id: 5, 
+                q: "Você joga sob efeito de cansaço ou álcool?", 
+                options: ["Nunca", "Raramente", "Frequentemente"],
+                peso: [3, 1, 0]
+            }
         ];
 
+        // ==================== ESTADO GLOBAL ====================
         let respostas = {};
+        let userId = null;
+        let userProfile = null;
 
-        // Lógica Manifesto
+        // ==================== MÓDULO 0: MANIFESTO ====================
         const mDiv = document.getElementById('manifesto-text');
         const btnAceitar = document.getElementById('btn-aceitar');
         
         let mIndex = 0;
-        function typeM() {
+        function typeManifesto() {
             if(mIndex < manifesto.length) {
                 let p = document.createElement('p');
                 p.innerText = manifesto[mIndex];
-                p.className = "fade-in " + (manifesto[mIndex].includes("Chip") ? "text-green-400 font-bold" : "");
+                p.className = "fade-in " + (manifesto[mIndex].includes("Chip") ? "text-green-400 font-bold neon-text" : "text-gray-300");
                 mDiv.appendChild(p);
                 mIndex++;
-                setTimeout(typeM, 1000);
+                setTimeout(typeManifesto, 1200);
             } else {
-                btnAceitar.disabled = false;
-                btnAceitar.innerText = "ACEITAR O COMANDO";
-                btnAceitar.className = "mt-8 px-8 py-4 border border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-black transition-all cursor-pointer neon-border";
+                setTimeout(() => {
+                    btnAceitar.disabled = false;
+                    btnAceitar.innerText = "ACEITAR O COMANDO";
+                    btnAceitar.className = "mt-12 px-10 py-4 border border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-black transition-all cursor-pointer neon-border pulse-border uppercase text-sm tracking-wider";
+                }, 500);
             }
         }
 
-        btnAceitar.onclick = async () => {
+        btnAceitar.onclick = () => {
             document.getElementById('mod-manifesto').classList.add('hidden');
             document.getElementById('mod-quiz').classList.remove('hidden');
             startQuiz();
-            // Log no console por enquanto (amanhã ligamos a tabela)
-            console.log("Contrato aceito pelo Jader.");
         };
 
+        // ==================== MÓDULO 1: QUIZ ====================
         function startQuiz() {
             const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            
             perguntas.forEach((item, i) => {
                 let div = document.createElement('div');
-                div.className = "p-4 border border-gray-900 rounded bg-gray-950";
-                div.innerHTML = `<p class="mb-4 text-sm">${item.q}</p>
-                    <div class="grid grid-cols-1 gap-2">
-                        ${item.options.map(opt => `<button onclick="saveAns(${item.id}, '${opt}')" class="text-left p-2 text-xs border border-gray-800 hover:border-green-500 transition-all">${opt}</button>`).join('')}
-                    </div>`;
+                div.className = "p-6 border border-gray-900 rounded-lg bg-gray-950 fade-in";
+                div.style.animationDelay = `${i * 0.1}s`;
+                
+                let questionHTML = `
+                    <p class="mb-4 text-sm font-bold text-gray-300">
+                        <span class="text-green-400">[${i + 1}/5]</span> ${item.q}
+                    </p>
+                    <div class="space-y-2">
+                        ${item.options.map((opt, idx) => `
+                            <button onclick="saveAnswer(${item.id}, '${opt}', ${idx}, this)" 
+                                class="option-btn w-full text-left p-3 text-xs border border-gray-800 rounded transition-all">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                div.innerHTML = questionHTML;
                 container.appendChild(div);
             });
+            
+            checkQuizCompletion();
         }
 
-        function saveAns(id, val) {
-            respostas[id] = val;
-            console.log("Resposta salva:", respostas);
+        function saveAnswer(id, val, optionIndex, btnElement) {
+            // Remover seleção anterior da mesma pergunta
+            const parentDiv = btnElement.parentElement;
+            parentDiv.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Marcar como selecionado
+            btnElement.classList.add('selected');
+            
+            // Salvar resposta
+            respostas[id] = {
+                resposta: val,
+                peso: perguntas.find(p => p.id === id).peso[optionIndex]
+            };
+            
+            checkQuizCompletion();
+        }
+
+        function checkQuizCompletion() {
+            const btnFinalizar = document.getElementById('btn-finalizar-quiz');
             if(Object.keys(respostas).length === 5) {
-                alert("DNA MAPEADO. SISTEMA EM ANÁLISE.");
+                btnFinalizar.disabled = false;
+                btnFinalizar.className = "px-10 py-4 border border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-black transition-all cursor-pointer neon-border pulse-border uppercase text-sm tracking-wider";
+                btnFinalizar.onclick = processarPerfil;
             }
         }
 
-        window.onload = typeM;
+        // ==================== MÓDULO 2: PROCESSAMENTO ====================
+        async function processarPerfil() {
+            document.getElementById('mod-quiz').classList.add('hidden');
+            document.getElementById('mod-processamento').classList.remove('hidden');
+            
+            const statusDiv = document.getElementById('processing-status');
+            const steps = [
+                "Conectando ao Chip...",
+                "Analisando respostas...",
+                "Calculando perfil de risco...",
+                "Definindo patente inicial...",
+                "Salvando dados no sistema..."
+            ];
+            
+            for(let i = 0; i < steps.length; i++) {
+                await new Promise(resolve => setTimeout(resolve, 800));
+                let p = document.createElement('p');
+                p.innerText = `> ${steps[i]}`;
+                p.className = "fade-in text-green-400";
+                statusDiv.appendChild(p);
+            }
+            
+            await salvarDadosSupabase();
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            document.getElementById('mod-processamento').classList.add('hidden');
+            document.getElementById('mod-dashboard').classList.remove('hidden');
+            
+            carregarDashboard();
+        }
+
+        async function salvarDadosSupabase() {
+            try {
+                // Calcular score
+                const score = Object.values(respostas).reduce((acc, r) => acc + r.peso, 0);
+                const maxScore = 15;
+                const percentual = (score / maxScore) * 100;
+                
+                // Definir DNA
+                let dnaStatus = "";
+                if(percentual >= 80) dnaStatus = "Disciplinado Blindado";
+                else if(percentual >= 60) dnaStatus = "Consistente em Evolução";
+                else if(percentual >= 40) dnaStatus = "Agressivo Inconstante";
+                else dnaStatus = "Emocional Vulnerável";
+                
+                // Inserir perfil
+                const { data: profileData, error: profileError } = await supabase
+                    .from('user_profiles')
+                    .insert([{
+                        patente: 'Observador',
+                        dna_status: dnaStatus,
+                        score: score
+                    }])
+                    .select();
+                
+                if(profileError) throw profileError;
+                
+                userId = profileData[0].id;
+                userProfile = profileData[0];
+                
+                // Inserir log do quiz
+                const { error: logError } = await supabase
+                    .from('user_logs')
+                    .insert([{
+                        user_id: userId,
+                        tipo: 'quiz',
+                        respostas: respostas,
+                        score: score
+                    }]);
+                
+                if(logError) throw logError;
+                
+            } catch(error) {
+                console.error('Erro ao salvar dados:', error);
+                alert('Erro ao salvar dados. Verifique o console.');
+            }
+        }
+
+        // ==================== MÓDULO 3: DASHBOARD ====================
+        function carregarDashboard() {
+            document.getElementById('patente-display').innerText = userProfile.patente;
+            document.getElementById('dna-display').innerText = userProfile.dna_status;
+            document.getElementById('user-id-display').innerText = userId.substring(0, 8).toUpperCase();
+            
+            carregarHistorico();
+        }
+
+        document.getElementById('btn-salvar-log').onclick = async () => {
+            const ganhos = parseFloat(document.getElementById('input-ganhos').value) || 0;
+            const perdas = parseFloat(document.getElementById('input-perdas').value) || 0;
+            const observacoes = document.getElementById('input-observacoes').value;
+            
+            if(ganhos === 0 && perdas === 0) {
+                alert('Preencha pelo menos um valor (ganhos ou perdas).');
+                return;
+            }
+            
+            const resultado = ganhos - perdas;
+            
+            try {
+                const { error } = await supabase
+                    .from('user_logs')
+                    .insert([{
+                        user_id: userId,
+                        tipo: 'sessao',
+                        ganhos: ganhos,
+                        perdas: perdas,
+                        resultado: resultado,
+                        observacoes: observacoes
+                    }]);
+                
+                if(error) throw error;
+                
+                // Limpar campos
+                document.getElementById('input-ganhos').value = '';
+                document.getElementById('input-perdas').value = '';
+                document.getElementById('input-observacoes').value = '';
+                
+                // Recarregar histórico
+                carregarHistorico();
+                
+                alert('Sessão registrada com sucesso!');
+            } catch(error) {
+                console.error('Erro ao salvar log:', error);
+                alert('Erro ao salvar sessão. Verifique o console.');
+            }
+        };
+
+        async function carregarHistorico() {
+            try {
+                const { data, error } = await supabase
+                    .from('user_logs')
+                    .select('*')
+                    .eq('user_id', userId)
+                    .eq('tipo', 'sessao')
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                
+                if(error) throw error;
+                
+                const historyDiv = document.getElementById('log-history');
+                
+                if(data.length === 0) {
+                    historyDiv.innerHTML = '<p class="text-sm text-gray-600 text-center py-8">Nenhuma sessão registrada ainda.</p>';
+                    return;
+                }
+                
+                historyDiv.innerHTML = data.map(log => {
+                    const resultadoClass = log.resultado >= 0 ? 'text-green-400' : 'text-red-400';
+                    const resultadoSymbol = log.resultado >= 0 ? '+' : '';
+                    const date = new Date(log.created_at).toLocaleString('pt-BR');
+                    
+                    return `
+                        <div class="p-4 border border-gray-900 rounded bg-black">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs text-gray-500">${date}</span>
+                                <span class="text-sm font-bold ${resultadoClass}">${resultadoSymbol}R$ ${log.resultado.toFixed(2)}</span>
+                            </div>
+                            <div class="text-xs text-gray-400 space-y-1">
+                                <p>Ganhos: <span class="text-green-400">R$ ${log.ganhos.toFixed(2)}</span></p>
+                                <p>Perdas: <span class="text-red-400">R$ ${log.perdas.toFixed(2)}</span></p>
+                                ${log.observacoes ? `<p class="mt-2 text-gray-500 italic">"${log.observacoes}"</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch(error) {
+                console.error('Erro ao carregar histórico:', error);
+            }
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
+        window.onload = typeManifesto;
     </script>
 </body>
 </html>
