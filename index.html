@@ -296,7 +296,6 @@
             if(answers[index] !== null) {
                 const btns = div.querySelectorAll('.option-btn');
                 btns[answers[index]].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
-                btns.forEach(btn => btn.disabled = true);
                 document.getElementById('btn-proxima').disabled = false;
                 document.getElementById('btn-proxima').classList.remove('opacity-50', 'cursor-not-allowed');
                 document.getElementById('btn-proxima').classList.add('border-green-500', 'text-green-400');
@@ -304,13 +303,13 @@
         }
 
         function selectAnswer(optionIndex) {
-            if(answers[currentQuestion] !== null) return;
-            
             answers[currentQuestion] = optionIndex;
             
             const btns = document.querySelectorAll('.option-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
+            });
             btns[optionIndex].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
-            btns.forEach(btn => btn.disabled = true);
             
             const btnProxima = document.getElementById('btn-proxima');
             btnProxima.disabled = false;
@@ -324,19 +323,21 @@
             currentQuestion++;
             
             if(currentQuestion === totalQuestions) {
-                finalizarQuiz();
+                document.getElementById('modulo-1').classList.add('hidden');
+                finalizarDiagnostico();
                 return;
             }
             
             renderizarPergunta(currentQuestion);
         }
         
-        function finalizarQuiz() {
+        function finalizarDiagnostico() {
             if(answers.includes(null)) {
                 alert('⚠️ Responda todas as perguntas antes de finalizar!');
                 return;
             }
             
+            localStorage.setItem('cybergrinder_answers', JSON.stringify(answers));
             calcularPerfil();
         }
         
