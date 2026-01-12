@@ -78,8 +78,11 @@
     <!-- MÓDULO 0: MANIFESTO DE BLINDAGEM -->
     <section id="mod-manifesto" class="max-w-2xl text-center space-y-6">
         <header class="opacity-40 text-xs tracking-[0.3em] mb-12 uppercase">Blindagem de Patrimônio</header>
+        <button id="btn-iniciar" class="mb-8 px-12 py-5 border-2 border-green-500 text-green-400 rounded bg-black hover:bg-green-950 transition-all duration-300 uppercase text-base tracking-wider font-bold pulse-border neon-text">
+            ⚡ INICIAR SISTEMA ⚡
+        </button>
         <div id="manifesto-text" class="space-y-4 text-sm md:text-base leading-relaxed"></div>
-        <button id="btn-aceitar" disabled class="mt-12 px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
+        <button id="btn-aceitar" disabled class="hidden mt-12 px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
             Aguardando leitura...
         </button>
     </section>
@@ -483,8 +486,15 @@
         }
 
         // ==================== INICIALIZAÇÃO ====================
-        // Executar imediatamente (script já está no final do body)
-        typeManifesto();
+        // Conectar botão INICIAR SISTEMA com typeManifesto
+        document.getElementById('btn-iniciar').addEventListener('click', function() {
+            // Ocultar botão iniciar
+            document.getElementById('btn-iniciar').classList.add('hidden');
+            // Mostrar botão aceitar
+            document.getElementById('btn-aceitar').classList.remove('hidden');
+            // Iniciar typewriter
+            typeManifesto();
+        });
     </script>
 </body>
 </html>
