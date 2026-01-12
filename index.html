@@ -272,7 +272,7 @@
                     </p>
                     <div class="space-y-2">
                         ${item.options.map((opt, idx) => `
-                            <button onclick="saveAnswer(${item.id}, '${opt.replace(/'/g, "\\'")}'', ${idx}, this)" 
+                            <button onclick="saveAnswer(${item.id}, '${opt.replace(/'/g, "\\'")}', ${idx}, this)" 
                                 class="option-btn w-full text-left p-3 text-xs border border-gray-800 rounded transition-all">
                                 ${opt}
                             </button>
