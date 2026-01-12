@@ -3,721 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBER GRINDER | Sistema de Blindagem</title>
+    <title>Cyber Grind | Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'JetBrains Mono', monospace; 
-            background-color: #000000; 
-            color: #e5e7eb; 
-            overflow-x: hidden; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .neon-border { 
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5), 0 0 5px rgba(34, 197, 94, 0.3); 
-            border: 1px solid #22c55e; 
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .neon-text {
-            text-shadow: 0 0 10px rgba(34, 197, 94, 0.8), 0 0 20px rgba(34, 197, 94, 0.4);
+        
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
         }
-        .fade-in { 
-            animation: fadeIn 0.6s ease-in forwards; 
+        
+        .login-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(15px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
         }
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(34, 197, 94, 0.8); }
+        
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
         }
-        .pulse-border {
-            animation: pulse-glow 2s infinite;
+        
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 8px;
+            margin-bottom: 32px;
         }
-        .hidden { 
-            display: none; 
+        
+        .form-group {
+            margin-bottom: 20px;
         }
-        .typewriter {
-            overflow: hidden;
-            white-space: nowrap;
-            animation: typing 1.5s steps(40, end);
+        
+        .form-label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        .spinner {
-            border: 3px solid rgba(34, 197, 94, 0.1);
-            border-top: 3px solid #22c55e;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .option-btn {
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 8px;
+            color: #f1f5f9;
+            font-size: 14px;
             transition: all 0.3s ease;
         }
-        .option-btn:hover {
-            border-color: #22c55e;
-            background-color: rgba(34, 197, 94, 0.1);
-            transform: translateX(5px);
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+            background: rgba(30, 41, 59, 0.8);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
         }
-        .option-btn.selected {
-            border-color: #10b981;
-            background-color: rgba(16, 185, 129, 0.2);
+        
+        .form-input::placeholder {
+            color: #64748b;
+        }
+        
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            color: #fca5a5;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .link-text {
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .link-text:hover {
+            color: #0ea5e9;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 24px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(56, 189, 248, 0.2);
+        }
+        
+        .divider span {
+            padding: 0 16px;
+            color: #64748b;
+            font-size: 13px;
         }
     </style>
 </head>
-<body class="min-h-screen p-6 flex flex-col items-center justify-center">
-
-    <!-- MÓDULO 0: MANIFESTO DE BLINDAGEM -->
-    <section id="mod-manifesto" class="max-w-2xl text-center space-y-6">
-        <header class="opacity-40 text-xs tracking-[0.3em] mb-12 uppercase">Blindagem de Patrimônio</header>
-        <button id="btn-iniciar" onclick="iniciarSistema()" class="mb-8 px-12 py-5 border-2 border-green-500 text-green-400 rounded bg-black hover:bg-green-950 transition-all duration-300 uppercase text-base tracking-wider font-bold pulse-border neon-text">
-            ⚡ INICIAR SISTEMA ⚡
-        </button>
-        <div id="manifesto-text" class="space-y-4 text-sm md:text-base leading-relaxed"></div>
-        <button id="btn-aceitar" disabled class="hidden mt-12 px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
-            Aguardando leitura...
-        </button>
-    </section>
-
-    <!-- MÓDULO 1: QUIZ DE DNA -->
-    <section id="mod-quiz" class="hidden max-w-2xl w-full space-y-8 fade-in">
-        <div class="text-center mb-8">
-            <h2 class="text-green-400 font-bold text-2xl mb-3 neon-text">DIAGNÓSTICO DE DNA</h2>
-            <p class="text-gray-500 text-xs uppercase tracking-widest">Responda com frieza. O Chip está analisando.</p>
-        </div>
-        <div id="quiz-container" class="space-y-6"></div>
-        <div class="flex justify-center mt-8">
-            <button id="btn-finalizar-quiz" onclick="finalizarDiagnostico()" disabled class="px-10 py-4 border border-gray-800 text-gray-600 rounded transition-all duration-500 uppercase text-sm tracking-wider">
-                Finalizar Diagnóstico
-            </button>
-        </div>
-    </section>
-
-    <!-- MÓDULO 2: PROCESSAMENTO DE PERFIL -->
-    <section id="mod-processamento" class="hidden max-w-2xl w-full text-center space-y-8 fade-in">
-        <div class="spinner mx-auto"></div>
-        <h2 class="text-green-400 font-bold text-xl neon-text">PROCESSANDO DNA</h2>
-        <p class="text-gray-500 text-sm">Analisando respostas e calibrando perfil operacional...</p>
-        <div id="processing-status" class="text-xs text-gray-600 space-y-2 mt-6"></div>
-    </section>
-
-    <!-- MÓDULO 3: DASHBOARD DO OPERADOR -->
-    <section id="mod-dashboard" class="hidden max-w-4xl w-full space-y-8 fade-in">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-green-400 neon-text mb-2">CYBER GRINDER</h1>
-            <p class="text-gray-500 text-xs uppercase tracking-widest">Sistema de Blindagem Ativo</p>
-        </header>
-
-        <!-- Status Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Patente -->
-            <div class="p-6 border border-gray-900 rounded-lg neon-border bg-gray-950">
-                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Patente Atual</p>
-                <p id="patente-display" class="text-2xl font-bold text-green-400">Observador</p>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <div class="logo-text">CYBER GRIND</div>
             </div>
             
-            <!-- Status de DNA -->
-            <div class="p-6 border border-gray-900 rounded-lg neon-border bg-gray-950">
-                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Status de DNA</p>
-                <p id="dna-display" class="text-lg font-bold text-green-400">Analisando...</p>
-            </div>
+            <p class="subtitle">Treine seu poker como um profissional</p>
             
-            <!-- User ID -->
-            <div class="p-6 border border-gray-900 rounded-lg neon-border bg-gray-950">
-                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Operador ID</p>
-                <p id="user-id-display" class="text-sm font-mono text-gray-400">---</p>
-            </div>
-        </div>
-
-        <!-- Grind Log -->
-        <div class="p-8 border border-gray-900 rounded-lg neon-border bg-gray-950">
-            <h3 class="text-xl font-bold text-green-400 mb-6 neon-text">GRIND LOG</h3>
-            <div class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Ganhos do Dia (R$)</label>
-                        <input type="number" id="input-ganhos" placeholder="0.00" 
-                            class="w-full p-3 bg-black border border-gray-800 rounded text-green-400 focus:border-green-500 focus:outline-none transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Perdas do Dia (R$)</label>
-                        <input type="number" id="input-perdas" placeholder="0.00" 
-                            class="w-full p-3 bg-black border border-gray-800 rounded text-red-400 focus:border-red-500 focus:outline-none transition-all">
-                    </div>
+            <div id="error-message" class="error-message"></div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        placeholder="seu@email.com"
+                        required
+                    >
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Observações</label>
-                    <textarea id="input-observacoes" rows="3" placeholder="Descreva sua sessão..." 
-                        class="w-full p-3 bg-black border border-gray-800 rounded text-gray-300 focus:border-green-500 focus:outline-none transition-all resize-none"></textarea>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Senha</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    >
                 </div>
-                <button id="btn-salvar-log" 
-                    class="w-full px-8 py-4 border border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-black transition-all uppercase text-sm tracking-wider neon-border">
-                    Registrar Sessão
+                
+                <div class="forgot-password">
+                    <a href="#" class="link-text" id="forgot-password-link">Esqueci minha senha</a>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="login-btn">
+                    Entrar
                 </button>
+            </form>
+            
+            <div class="signup-link">
+                Não tem uma conta? <a href="#" class="link-text" id="signup-link">Cadastre-se</a>
             </div>
         </div>
-
-        <!-- Log History -->
-        <div class="p-8 border border-gray-900 rounded-lg bg-gray-950">
-            <h3 class="text-xl font-bold text-gray-400 mb-6">HISTÓRICO DE SESSÕES</h3>
-            <div id="log-history" class="space-y-3 max-h-96 overflow-y-auto">
-                <p class="text-sm text-gray-600 text-center py-8">Nenhuma sessão registrada ainda.</p>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <script>
-        // ==================== CONFIGURAÇÃO SUPABASE ====================
-        const SUPABASE_URL = "https://njrjrugjzjyukcpzwibt.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcmpydWdqemp5dWtjcHp3aWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY2MzI0NzksImV4cCI6MjA1MjIwODQ3OX0.iy_Ux-kKaLUlCUVDXI0MfYLjQYPzNrCVVNy_iiJaLmU";
-        let supabase = null; // Será inicializado quando necessário
-
-        // ==================== DADOS DO SISTEMA ====================
-        const manifesto = [
-            "O baralho não tem memória. Eu tenho.",
-            "O baralho não sente nada. Você sente.",
-            "Aqui, o 'eu acho' morreu.",
-            "Só existem posição, range e execução.",
-            "Eu sou o Chip. Sua mente será blindada."
-        ];
-
-        // BLOCO 1: Logística e Setup (10 Questões)
-        const perguntas = [
-            { pergunta: "Backup Internet:", opcoes: [{ texto: "4G/5G ativo", pontos: 10 }, { texto: "Celular perto", pontos: 5 }, { texto: "Sem backup", pontos: 0 }] },
-            { pergunta: "Hardware:", opcoes: [{ texto: "Topo de linha", pontos: 10 }, { texto: "Médio", pontos: 5 }, { texto: "Trava/Lento", pontos: 0 }] },
-            { pergunta: "Ambiente:", opcoes: [{ texto: "Escritório isolado", pontos: 10 }, { texto: "Quarto", pontos: 5 }, { texto: "Sala/Público", pontos: 0 }] },
-            { pergunta: "Telas:", opcoes: [{ texto: "2 ou +", pontos: 10 }, { texto: "1 tela", pontos: 5 }, { texto: "Notebook", pontos: 0 }] },
-            { pergunta: "Softwares:", opcoes: [{ texto: "Domina HUD/Solver", pontos: 10 }, { texto: "Usa básico", pontos: 5 }, { texto: "Não usa", pontos: 0 }] },
-            { pergunta: "Ergonomia:", opcoes: [{ texto: "Profissional", pontos: 10 }, { texto: "Cadeira comum", pontos: 5 }, { texto: "Sofá/Cama", pontos: 0 }] },
-            { pergunta: "Foco Auditivo:", opcoes: [{ texto: "Música foco", pontos: 10 }, { texto: "Podcast", pontos: 5 }, { texto: "TV/Ruído", pontos: 0 }] },
-            { pergunta: "Rotina Pré-Grind:", opcoes: [{ texto: "Meditação/Ritual", pontos: 10 }, { texto: "Às vezes", pontos: 5 }, { texto: "Nunca", pontos: 0 }] },
-            { pergunta: "Energia Física:", opcoes: [{ texto: "Descansado", pontos: 10 }, { texto: "Cansado", pontos: 5 }, { texto: "Exausto", pontos: 0 }] },
-            { pergunta: "Alimentação:", opcoes: [{ texto: "Planejada", pontos: 10 }, { texto: "Aleatória", pontos: 5 }, { texto: "Má qualidade", pontos: 0 }] },
-            // BLOCO 2: DNA Emocional/Psicológico (15 Questões)
-            { pergunta: "Bad Beat:", opcoes: [{ texto: "Próxima mão", pontos: 10 }, { texto: "Irrita", pontos: 5 }, { texto: "Tilt/Fecha o jogo", pontos: 0 }] },
-            { pergunta: "Stop Loss:", opcoes: [{ texto: "Respeito total", pontos: 10 }, { texto: "Tento recuperar", pontos: 5 }, { texto: "Sem limite", pontos: 0 }] },
-            { pergunta: "Ansiedade Reta Final:", opcoes: [{ texto: "Foco", pontos: 10 }, { texto: "Nervoso", pontos: 5 }, { texto: "Erro por pressão", pontos: 0 }] },
-            { pergunta: "Disciplina:", opcoes: [{ texto: "Rígida", pontos: 10 }, { texto: "Flexível", pontos: 5 }, { texto: "Sem horários", pontos: 0 }] },
-            { pergunta: "Foco Longo Prazo:", opcoes: [{ texto: "Analiso o mês", pontos: 10 }, { texto: "Analiso a semana", pontos: 5 }, { texto: "Sofro com o dia", pontos: 0 }] },
-            { pergunta: "Resiliência:", opcoes: [{ texto: "Supero rápido", pontos: 10 }, { texto: "Demoro a recuperar", pontos: 5 }, { texto: "Fico abalado dias", pontos: 0 }] },
-            { pergunta: "Controle de Impulso:", opcoes: [{ texto: "Total controle", pontos: 10 }, { texto: "Às vezes erro", pontos: 5 }, { texto: "Impulsivo", pontos: 0 }] },
-            { pergunta: "Autoestima:", opcoes: [{ texto: "Confiante", pontos: 10 }, { texto: "Oscila", pontos: 5 }, { texto: "Baixa", pontos: 0 }] },
-            { pergunta: "Gestão de Tilt:", opcoes: [{ texto: "Paro e respiro", pontos: 10 }, { texto: "Continuo nervoso", pontos: 5 }, { texto: "Perco controle", pontos: 0 }] },
-            { pergunta: "Pressão de Resultado:", opcoes: [{ texto: "Jogo igual", pontos: 10 }, { texto: "Muda um pouco", pontos: 5 }, { texto: "Desespero", pontos: 0 }] },
-            { pergunta: "Autocrítica:", opcoes: [{ texto: "Construtiva", pontos: 10 }, { texto: "Dura demais", pontos: 5 }, { texto: "Me culpo sempre", pontos: 0 }] },
-            { pergunta: "Motivação:", opcoes: [{ texto: "Consistente", pontos: 10 }, { texto: "Oscila", pontos: 5 }, { texto: "Baixa", pontos: 0 }] },
-            { pergunta: "Gestão de Expectativa:", opcoes: [{ texto: "Realista", pontos: 10 }, { texto: "Às vezes exagero", pontos: 5 }, { texto: "Expectativas irreais", pontos: 0 }] },
-            { pergunta: "Equilíbrio Vida/Poker:", opcoes: [{ texto: "Balanceado", pontos: 10 }, { texto: "Poker domina", pontos: 5 }, { texto: "Sem equilíbrio", pontos: 0 }] },
-            { pergunta: "Mindset:", opcoes: [{ texto: "Crescimento", pontos: 10 }, { texto: "Misto", pontos: 5 }, { texto: "Fixo/Limitado", pontos: 0 }] },
-            // BLOCO 3: Técnica e Fundamentos (15 Questões)
-            { pergunta: "Ranges Open Raise:", opcoes: [{ texto: "Estudados", pontos: 10 }, { texto: "Intuitivos", pontos: 5 }, { texto: "Aleatórios", pontos: 0 }] },
-            { pergunta: "Defesa de Blinds:", opcoes: [{ texto: "Domina matemática", pontos: 10 }, { texto: "Defende muito", pontos: 5 }, { texto: "Passivo", pontos: 0 }] },
-            { pergunta: "ICM:", opcoes: [{ texto: "Domina pressões", pontos: 10 }, { texto: "Básico", pontos: 5 }, { texto: "Não aplica", pontos: 0 }] },
-            { pergunta: "Revisão de Mãos:", opcoes: [{ texto: "Diária", pontos: 10 }, { texto: "Semanal", pontos: 5 }, { texto: "Nunca", pontos: 0 }] },
-            { pergunta: "GTO vs Exploit:", opcoes: [{ texto: "Balanço perfeito", pontos: 10 }, { texto: "Mais GTO", pontos: 5 }, { texto: "Não sei a diferença", pontos: 0 }] },
-            { pergunta: "3Bet Pots:", opcoes: [{ texto: "Domino ranges", pontos: 10 }, { texto: "Jogo básico", pontos: 5 }, { texto: "Evito", pontos: 0 }] },
-            { pergunta: "C-Bet:", opcoes: [{ texto: "Frequência estudada", pontos: 10 }, { texto: "Intuitivo", pontos: 5 }, { texto: "Sempre ou nunca", pontos: 0 }] },
-            { pergunta: "Pot Odds:", opcoes: [{ texto: "Calculo sempre", pontos: 10 }, { texto: "Às vezes", pontos: 5 }, { texto: "Não calculo", pontos: 0 }] },
-            { pergunta: "Equity:", opcoes: [{ texto: "Domino conceito", pontos: 10 }, { texto: "Básico", pontos: 5 }, { texto: "Não sei", pontos: 0 }] },
-            { pergunta: "Sizings:", opcoes: [{ texto: "Otimizados", pontos: 10 }, { texto: "Padrão", pontos: 5 }, { texto: "Aleatórios", pontos: 0 }] },
-            { pergunta: "Reads:", opcoes: [{ texto: "Anoto e uso", pontos: 10 }, { texto: "Observo", pontos: 5 }, { texto: "Não faço", pontos: 0 }] },
-            { pergunta: "Ajustes por Posição:", opcoes: [{ texto: "Domino todos", pontos: 10 }, { texto: "Básico", pontos: 5 }, { texto: "Jogo igual", pontos: 0 }] },
-            { pergunta: "River Play:", opcoes: [{ texto: "Confiante", pontos: 10 }, { texto: "Inseguro", pontos: 5 }, { texto: "Erro muito", pontos: 0 }] },
-            { pergunta: "Bluff Catching:", opcoes: [{ texto: "Domino", pontos: 10 }, { texto: "Às vezes acerto", pontos: 5 }, { texto: "Não sei", pontos: 0 }] },
-            { pergunta: "Stack-off Ranges:", opcoes: [{ texto: "Estudados", pontos: 10 }, { texto: "Intuitivos", pontos: 5 }, { texto: "Aleatórios", pontos: 0 }] },
-            // BLOCO 4: Histórico e Gestão (10 Questões)
-            { pergunta: "Bankroll:", opcoes: [{ texto: "100+ BIs", pontos: 10 }, { texto: "50 BIs", pontos: 5 }, { texto: "No tiro", pontos: 0 }] },
-            { pergunta: "Volume:", opcoes: [{ texto: "Meta batida", pontos: 10 }, { texto: "Oscila", pontos: 5 }, { texto: "Baixo", pontos: 0 }] },
-            { pergunta: "Estudo:", opcoes: [{ texto: "1h/dia", pontos: 10 }, { texto: "2h/semana", pontos: 5 }, { texto: "Não estuda", pontos: 0 }] },
-            { pergunta: "Networking:", opcoes: [{ texto: "Ativo em comunidades", pontos: 10 }, { texto: "Participo às vezes", pontos: 5 }, { texto: "Isolado", pontos: 0 }] },
-            { pergunta: "Gestão de Saques:", opcoes: [{ texto: "Planejada", pontos: 10 }, { texto: "Eventual", pontos: 5 }, { texto: "Saco tudo", pontos: 0 }] },
-            { pergunta: "Tracking:", opcoes: [{ texto: "Analiso HUD diário", pontos: 10 }, { texto: "Olho às vezes", pontos: 5 }, { texto: "Não uso", pontos: 0 }] },
-            { pergunta: "Metas:", opcoes: [{ texto: "Claras e escritas", pontos: 10 }, { texto: "Vagas", pontos: 5 }, { texto: "Sem metas", pontos: 0 }] },
-            { pergunta: "Investimento em Educação:", opcoes: [{ texto: "Cursos/Coaching", pontos: 10 }, { texto: "Conteúdo gratuito", pontos: 5 }, { texto: "Não invisto", pontos: 0 }] },
-            { pergunta: "Autocrítica Pós-Sessão:", opcoes: [{ texto: "Sempre analiso", pontos: 10 }, { texto: "Às vezes", pontos: 5 }, { texto: "Nunca", pontos: 0 }] },
-            { pergunta: "Visão de Carreira:", opcoes: [{ texto: "Profissional de longo prazo", pontos: 10 }, { texto: "Renda extra", pontos: 5 }, { texto: "Hobby/Diversão", pontos: 0 }] }
-        ];
-
-        // ==================== ENGENHARIA DE ESTADO ====================
-        window.dnaSession = {
-            totalQuestions: 50,
-            answeredQuestions: 0,
-            totalScore: 0,
-            answers: new Array(50).fill(null)
-        };
+        const SUPABASE_URL = 'https://njrjrugjzjyukcpzwibt.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcmpydWdqemp5dWtjcHp3aWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY2NTU3MTUsImV4cCI6MjA1MjIzMTcxNX0.sb_publishable_IdBN5r7mocZmplhYOlHk9w_0krUOg_E';
         
-        let currentQuestion = 0;
-        const totalQuestions = 50;
-        const dnaAnswers = {};
-        let userId = null;
-        let userProfile = null;
-
-        // ==================== MÓDULO 0: MANIFESTO ====================
-        const mDiv = document.getElementById('manifesto-text');
-        const btnAceitar = document.getElementById('btn-aceitar');
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        let mIndex = 0;
-        function typeManifesto() {
-            if(mIndex < manifesto.length) {
-                let p = document.createElement('p');
-                p.innerText = manifesto[mIndex];
-                p.className = "fade-in " + (manifesto[mIndex].includes("Chip") ? "text-green-400 font-bold neon-text" : "text-gray-300");
-                mDiv.appendChild(p);
-                mIndex++;
-                setTimeout(typeManifesto, 1200);
-            } else {
-                setTimeout(() => {
-                    btnAceitar.disabled = false;
-                    btnAceitar.innerText = "ACEITAR O COMANDO";
-                    btnAceitar.className = "mt-12 px-10 py-4 border border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-black transition-all cursor-pointer neon-border pulse-border uppercase text-sm tracking-wider";
-                }, 500);
-            }
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const errorMessage = document.getElementById('error-message');
+        const signupLink = document.getElementById('signup-link');
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
         }
-
-        btnAceitar.onclick = () => {
-            document.getElementById('mod-manifesto').classList.add('hidden');
-            document.getElementById('mod-quiz').classList.remove('hidden');
-            startQuiz();
-        };
-
-        // ==================== MÓDULO 1: QUIZ ====================
-        function startQuiz() {
-            renderizarPergunta(0);
+        
+        function hideError() {
+            errorMessage.classList.remove('show');
         }
-
-        function renderizarPergunta(index) {
-            const container = document.getElementById('quiz-container');
-            container.innerHTML = '';
+        
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideError();
             
-            const item = perguntas[index];
-            let div = document.createElement('div');
-            div.className = "p-6 border border-gray-900 rounded-lg bg-gray-950";
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
             
-            let questionHTML = `
-                <p class="mb-4 text-sm font-bold text-gray-300">
-                    <span class="text-green-400">[${index + 1}/${totalQuestions}]</span> ${item.pergunta}
-                </p>
-                <div class="space-y-2">
-                    ${item.opcoes.map((opt, idx) => `
-                        <button onclick="selectAnswer(${idx})" 
-                                class="option-btn w-full text-left p-3 text-xs border border-gray-800 rounded transition-all">
-                                ${opt.texto}
-                            </button>
-                        `).join('')}
-                </div>
-                <div class="mt-4">
-                    <button id="btn-proxima" onclick="nextQuestion()" disabled class="w-full p-3 text-sm font-bold border border-gray-800 rounded transition-all opacity-50 cursor-not-allowed">
-                        PRÓXIMA PERGUNTA
-                    </button>
-                </div>
-            `;
-            div.innerHTML = questionHTML;
-            container.appendChild(div);
-            
-            if(window.dnaSession.answers[index] !== null) {
-                const btns = div.querySelectorAll('.option-btn');
-                btns[window.dnaSession.answers[index]].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
-                document.getElementById('btn-proxima').disabled = false;
-                document.getElementById('btn-proxima').classList.remove('opacity-50', 'cursor-not-allowed');
-                document.getElementById('btn-proxima').classList.add('border-green-500', 'text-green-400');
-            }
-        }
-
-        function selectAnswer(optionIndex) {
-            const perguntaAtual = perguntas[currentQuestion];
-            const pontos = perguntaAtual.opcoes[optionIndex].pontos;
-            
-            // Se já tinha resposta, remove os pontos antigos
-            if(window.dnaSession.answers[currentQuestion] !== null) {
-                const pontosAntigos = perguntaAtual.opcoes[window.dnaSession.answers[currentQuestion]].pontos;
-                window.dnaSession.totalScore -= pontosAntigos;
-            } else {
-                window.dnaSession.answeredQuestions++;
-            }
-            
-            // Salva nova resposta e soma pontos
-            window.dnaSession.answers[currentQuestion] = optionIndex;
-            window.dnaSession.totalScore += pontos;
-            
-            const btns = document.querySelectorAll('.option-btn');
-            btns.forEach(btn => {
-                btn.classList.remove('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
-            });
-            btns[optionIndex].classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
-            
-            const btnProxima = document.getElementById('btn-proxima');
-            btnProxima.disabled = false;
-            btnProxima.classList.remove('opacity-50', 'cursor-not-allowed');
-            btnProxima.classList.add('border-green-500', 'text-green-400');
-            
-            // Habilitar botão finalizar se todas as perguntas foram respondidas
-            if(window.dnaSession.answeredQuestions === 50) {
-                const btnFinalizar = document.getElementById('btn-finalizar-quiz');
-                btnFinalizar.disabled = false;
-                btnFinalizar.classList.remove('border-gray-800', 'text-gray-600');
-                btnFinalizar.classList.add('border-green-500', 'text-green-400', 'neon-border', 'pulse-border');
-            }
-        }
-
-        function nextQuestion() {
-            if(window.dnaSession.answers[currentQuestion] === null) return;
-            
-            currentQuestion++;
-            
-            if(currentQuestion === totalQuestions) {
-                document.getElementById('modulo-1').classList.add('hidden');
-                finalizarDiagnostico();
+            if (!email || !password) {
+                showError('Por favor, preencha todos os campos');
                 return;
             }
             
-            renderizarPergunta(currentQuestion);
-        }
-        
-        async function salvarNoSupabase(operadorId, totalScore, patente, dnaStatus) {
-            console.log('🔵 [DEBUG] Iniciando salvamento no Supabase...');
-            console.log('🔵 [DEBUG] operadorId:', operadorId);
-            console.log('🔵 [DEBUG] totalScore:', totalScore);
-            console.log('🔵 [DEBUG] patente:', patente);
-            console.log('🔵 [DEBUG] dnaStatus:', dnaStatus);
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Entrando...';
             
             try {
-                // Inicializar Supabase se ainda não foi
-                if (!supabase) {
-                    console.log('🔵 [DEBUG] Inicializando cliente Supabase...');
-                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                    console.log('🔵 [DEBUG] Cliente Supabase inicializado!');
-                }
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
                 
-                // Inserir/Atualizar perfil
-                const { data: profileData, error: profileError } = await supabase
-                    .from('user_profiles')
-                    .upsert([{
-                        id: operadorId,
-                        patente: patente,
-                        dna_status: dnaStatus,
-                        score: totalScore
-                    }], { onConflict: 'id' })
-                    .select();
-                
-                if(profileError) {
-                    console.error('❌ [DEBUG] Erro ao salvar perfil:', profileError);
-                    console.error('❌ [DEBUG] Detalhes:', profileError.message, profileError.details, profileError.hint);
-                } else {
-                    console.log('✅ [DEBUG] Perfil salvo com sucesso:', profileData);
-                }
-                
-                // Inserir log do quiz
-                const { error: logError } = await supabase
-                    .from('user_logs')
-                    .insert([{
-                        user_id: operadorId,
-                        tipo: 'quiz_dna',
-                        respostas: window.dnaSession.answers,
-                        score: totalScore
-                    }]);
-                
-                if(logError) {
-                    console.error('❌ [DEBUG] Erro ao inserir log:', logError);
-                    console.error('❌ [DEBUG] Detalhes:', logError.message, logError.details, logError.hint);
-                } else {
-                    console.log('✅ [DEBUG] Log inserido com sucesso!');
-                    alert('✅ Dados Salvos com Sucesso no Supabase!');
-                }
-                
-            } catch(err) {
-                console.error('❌ [DEBUG] Erro geral:', err);
-            }
-        }
-        
-        function finalizarDiagnostico() {
-            if(window.dnaSession.answeredQuestions < 50) {
-                alert('⚠️ Responda todas as 50 perguntas antes de finalizar!');
-                return;
-            }
-            
-            const totalScore = window.dnaSession.totalScore;
-            let patente = '';
-            let dnaStatus = '';
-            
-            // MATRIZ DE CÁLCULO (O VEREDITO)
-            if(totalScore >= 0 && totalScore <= 150) {
-                patente = 'OBSERVADOR';
-                dnaStatus = 'DNA Reativo';
-            } else if(totalScore >= 151 && totalScore <= 350) {
-                patente = 'OPERADOR';
-                dnaStatus = 'DNA em Formação';
-            } else if(totalScore >= 351 && totalScore <= 500) {
-                patente = 'BLINDADO';
-                dnaStatus = 'DNA de Elite';
-            }
-            
-            let operadorId = localStorage.getItem('operador_id');
-            if(!operadorId) {
-                operadorId = 'OP-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-                localStorage.setItem('operador_id', operadorId);
-            }
-            
-            // Salvar no localStorage
-            localStorage.setItem('cybergrinder_answers', JSON.stringify(window.dnaSession.answers));
-            localStorage.setItem('cybergrinder_score', totalScore);
-            localStorage.setItem('cybergrinder_patente', patente);
-            localStorage.setItem('cybergrinder_dna_status', dnaStatus);
-            localStorage.setItem('dnaCompleted', 'true');
-            
-            // Salvar no Supabase
-            salvarNoSupabase(operadorId, totalScore, patente, dnaStatus);
-            
-            mostrarResultado(patente, dnaStatus, operadorId, totalScore);
-        }
-        
-        function mostrarResultado(patente, dnaStatus, operadorId, totalScore) {
-            document.getElementById('modulo-1').classList.add('hidden');
-            document.getElementById('mod-processamento').classList.remove('hidden');
-            
-            const msgs = [
-                'Analisando padrões...',
-                'Calculando resistência emocional...',
-                'Mapeando vulnerabilidades...',
-                'Processando DNA do operador...',
-                'Veredito: ' + patente + ' | Score: ' + totalScore + ' pts'
-            ];
-            
-            let idx = 0;
-            const statusEl = document.getElementById('status-text');
-            const interval = setInterval(() => {
-                if(idx < msgs.length) {
-                    statusEl.innerText = msgs[idx];
-                    idx++;
-                } else {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        document.getElementById('mod-processamento').classList.add('hidden');
-                        document.getElementById('mod-dashboard').classList.remove('hidden');
-                        document.getElementById('patente-value').innerText = patente;
-                        document.getElementById('dna-value').innerText = dnaStatus;
-                        document.getElementById('operador-id').innerText = operadorId;
-                    }, 1000);
-                }
-            }, 800);
-        }
-
-        // ==================== MÓDULO 2: PROCESSAMENTO ====================
-        async function processarPerfil() {
-            document.getElementById('mod-quiz').classList.add('hidden');
-            document.getElementById('mod-processamento').classList.remove('hidden');
-            
-            const statusDiv = document.getElementById('processing-status');
-            const steps = [
-                "Conectando ao Chip...",
-                "Analisando respostas...",
-                "Calculando perfil de risco...",
-                "Definindo patente inicial...",
-                "Salvando dados no sistema..."
-            ];
-            
-            for(let i = 0; i < steps.length; i++) {
-                await new Promise(resolve => setTimeout(resolve, 800));
-                let p = document.createElement('p');
-                p.innerText = `> ${steps[i]}`;
-                p.className = "fade-in text-green-400";
-                statusDiv.appendChild(p);
-            }
-            
-            await salvarDadosSupabase();
-            
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            document.getElementById('mod-processamento').classList.add('hidden');
-            document.getElementById('mod-dashboard').classList.remove('hidden');
-            
-            carregarDashboard();
-        }
-
-        async function salvarDadosSupabase() {
-            console.log('🔵 [DEBUG] Iniciando salvamento no Supabase...');
-            console.log('🔵 [DEBUG] Respostas:', respostas);
-            try {
-                // Inicializar Supabase se ainda não foi
-                if (!supabase) {
-                    console.log('🔵 [DEBUG] Inicializando cliente Supabase...');
-                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                    console.log('🔵 [DEBUG] Cliente Supabase inicializado!');
-                }
-                // Calcular score
-                const score = Object.values(respostas).reduce((acc, r) => acc + r.peso, 0);
-                const maxScore = 15;
-                const percentual = (score / maxScore) * 100;
-                
-                // Definir DNA
-                let dnaStatus = "";
-                if(percentual >= 80) dnaStatus = "Disciplinado Blindado";
-                else if(percentual >= 60) dnaStatus = "Consistente em Evolução";
-                else if(percentual >= 40) dnaStatus = "Agressivo Inconstante";
-                else dnaStatus = "Emocional Vulnerável";
-                
-                // Inserir perfil
-                const { data: profileData, error: profileError } = await supabase
-                    .from('user_profiles')
-                    .insert([{
-                        patente: 'Observador',
-                        dna_status: dnaStatus,
-                        score: score
-                    }])
-                    .select();
-                
-                if(profileError) {
-                    console.error('❌ [DEBUG] Erro ao inserir perfil:', profileError);
-                    throw profileError;
-                }
-                
-                console.log('✅ [DEBUG] Perfil inserido com sucesso:', profileData);
-                userId = profileData[0].id;
-                userProfile = profileData[0];
-                console.log('✅ [DEBUG] userId:', userId);
-                
-                // Inserir log do quiz
-                const { error: logError } = await supabase
-                    .from('user_logs')
-                    .insert([{
-                        user_id: userId,
-                        tipo: 'quiz',
-                        respostas: respostas,
-                        score: score
-                    }]);
-                
-                if(logError) {
-                    console.error('❌ [DEBUG] Erro ao inserir log:', logError);
-                    throw logError;
-                }
-                
-                console.log('✅ [DEBUG] Log do quiz inserido com sucesso!');
-                console.log('🎉 [DEBUG] Todos os dados foram salvos no Supabase!');
-                alert('✅ Dados Salvos com Sucesso no Supabase!');
-                
-            } catch(error) {
-                console.error('❌ [DEBUG] Erro ao salvar dados:', error);
-                console.error('❌ [DEBUG] Detalhes do erro:', error.message, error.details, error.hint);
-                alert('❌ Erro ao salvar dados. Verifique o console para detalhes.');
-            }
-        }
-
-        // ==================== MÓDULO 3: DASHBOARD ====================
-        function carregarDashboard() {
-            document.getElementById('patente-display').innerText = userProfile.patente;
-            document.getElementById('dna-display').innerText = userProfile.dna_status;
-            document.getElementById('user-id-display').innerText = userId.substring(0, 8).toUpperCase();
-            
-            carregarHistorico();
-        }
-
-        document.getElementById('btn-salvar-log').onclick = async () => {
-            // Inicializar Supabase se ainda não foi
-            if (!supabase) {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            }
-            
-            const ganhos = parseFloat(document.getElementById('input-ganhos').value) || 0;
-            const perdas = parseFloat(document.getElementById('input-perdas').value) || 0;
-            const observacoes = document.getElementById('input-observacoes').value;
-            
-            if(ganhos === 0 && perdas === 0) {
-                alert('Preencha pelo menos um valor (ganhos ou perdas).');
-                return;
-            }
-            
-            const resultado = ganhos - perdas;
-            
-            try {
-                const { error } = await supabase
-                    .from('user_logs')
-                    .insert([{
-                        user_id: userId,
-                        tipo: 'sessao',
-                        ganhos: ganhos,
-                        perdas: perdas,
-                        resultado: resultado,
-                        observacoes: observacoes
-                    }]);
-                
-                if(error) throw error;
-                
-                // Limpar campos
-                document.getElementById('input-ganhos').value = '';
-                document.getElementById('input-perdas').value = '';
-                document.getElementById('input-observacoes').value = '';
-                
-                // Recarregar histórico
-                carregarHistorico();
-                
-                alert('Sessão registrada com sucesso!');
-            } catch(error) {
-                console.error('Erro ao salvar log:', error);
-                alert('Erro ao salvar sessão. Verifique o console.');
-            }
-        };
-
-        async function carregarHistorico() {
-            try {
-                // Inicializar Supabase se ainda não foi
-                if (!supabase) {
-                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                }
-                const { data, error } = await supabase
-                    .from('user_logs')
-                    .select('*')
-                    .eq('user_id', userId)
-                    .eq('tipo', 'sessao')
-                    .order('created_at', { ascending: false })
-                    .limit(10);
-                
-                if(error) throw error;
-                
-                const historyDiv = document.getElementById('log-history');
-                
-                if(data.length === 0) {
-                    historyDiv.innerHTML = '<p class="text-sm text-gray-600 text-center py-8">Nenhuma sessão registrada ainda.</p>';
+                if (error) {
+                    if (error.message.includes('Email not confirmed')) {
+                        showError('Email não confirmado. Verifique sua caixa de entrada.');
+                    } else if (error.message.includes('Invalid login credentials')) {
+                        showError('Email ou senha incorretos');
+                    } else {
+                        showError(error.message);
+                    }
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Entrar';
                     return;
                 }
                 
-                historyDiv.innerHTML = data.map(log => {
-                    const resultadoClass = log.resultado >= 0 ? 'text-green-400' : 'text-red-400';
-                    const resultadoSymbol = log.resultado >= 0 ? '+' : '';
-                    const date = new Date(log.created_at).toLocaleString('pt-BR');
-                    
-                    return `
-                        <div class="p-4 border border-gray-900 rounded bg-black">
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="text-xs text-gray-500">${date}</span>
-                                <span class="text-sm font-bold ${resultadoClass}">${resultadoSymbol}R$ ${log.resultado.toFixed(2)}</span>
-                            </div>
-                            <div class="text-xs text-gray-400 space-y-1">
-                                <p>Ganhos: <span class="text-green-400">R$ ${log.ganhos.toFixed(2)}</span></p>
-                                <p>Perdas: <span class="text-red-400">R$ ${log.perdas.toFixed(2)}</span></p>
-                                ${log.observacoes ? `<p class="mt-2 text-gray-500 italic">"${log.observacoes}"</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
+                // Login bem-sucedido
+                localStorage.setItem('user_session', JSON.stringify(data.session));
+                window.location.href = '/dashboard.html';
                 
-            } catch(error) {
-                console.error('Erro ao carregar histórico:', error);
+            } catch (err) {
+                console.error('Erro no login:', err);
+                showError('Erro ao fazer login. Tente novamente.');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Entrar';
             }
-        }
-
-        // ==================== FUNÇÃO DE INICIALIZAÇÃO ====================
-        window.iniciarSistema = function() {
-            document.getElementById('btn-iniciar').classList.add('hidden');
-            document.getElementById('btn-aceitar').classList.remove('hidden');
-            typeManifesto();
-        };
-
+        });
+        
+        signupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/signup.html';
+        });
+        
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/forgot-password.html';
+        });
     </script>
 </body>
 </html>
