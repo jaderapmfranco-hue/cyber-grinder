@@ -289,17 +289,17 @@
         function saveAnswer(id, val, optionIndex, btnElement) {
             const parentDiv = btnElement.parentElement;
             parentDiv.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('bg-green-500/20', 'border-green-500', 'text-green-400');
+                btn.classList.remove('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
             });
             
-            btnElement.classList.add('bg-green-500/20', 'border-green-500', 'text-green-400');
+            btnElement.classList.add('bg-green-500/20', 'border-green-500', 'text-green-400', 'selected');
             
             dnaAnswers['q' + id] = String.fromCharCode(65 + optionIndex);
             
-            checkQuizCompletion();
+            verificarProgresso();
         }
 
-        function checkQuizCompletion() {
+        function verificarProgresso() {
             const totalRespostas = Object.keys(dnaAnswers).length;
             
             if(totalRespostas === 5) {
@@ -308,6 +308,12 @@
         }
         
         function calcularPerfil() {
+            let operadorId = localStorage.getItem('operador_id');
+            if(!operadorId) {
+                operadorId = 'OP-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                localStorage.setItem('operador_id', operadorId);
+            }
+            
             const counts = {A: 0, B: 0, C: 0};
             Object.values(dnaAnswers).forEach(ans => counts[ans]++);
             
@@ -322,10 +328,10 @@
             localStorage.setItem('cybergrinder_dna', JSON.stringify(dnaAnswers));
             localStorage.setItem('cybergrinder_profile', perfil);
             
-            mostrarResultado(perfil);
+            mostrarResultado(perfil, operadorId);
         }
         
-        function mostrarResultado(perfil) {
+        function mostrarResultado(perfil, operadorId) {
             document.getElementById('mod-quiz').classList.add('hidden');
             document.getElementById('mod-processamento').classList.remove('hidden');
             
@@ -350,7 +356,7 @@
                         document.getElementById('mod-dashboard').classList.remove('hidden');
                         document.getElementById('patente-value').innerText = 'Observador';
                         document.getElementById('dna-value').innerText = perfil;
-                        document.getElementById('operador-id').innerText = 'OP-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                        document.getElementById('operador-id').innerText = operadorId;
                     }, 1000);
                 }
             }, 800);
