@@ -346,10 +346,14 @@
         }
 
         async function salvarDadosSupabase() {
+            console.log('🔵 [DEBUG] Iniciando salvamento no Supabase...');
+            console.log('🔵 [DEBUG] Respostas:', respostas);
             try {
                 // Inicializar Supabase se ainda não foi
                 if (!supabase) {
+                    console.log('🔵 [DEBUG] Inicializando cliente Supabase...');
                     supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                    console.log('🔵 [DEBUG] Cliente Supabase inicializado!');
                 }
                 // Calcular score
                 const score = Object.values(respostas).reduce((acc, r) => acc + r.peso, 0);
@@ -373,10 +377,15 @@
                     }])
                     .select();
                 
-                if(profileError) throw profileError;
+                if(profileError) {
+                    console.error('❌ [DEBUG] Erro ao inserir perfil:', profileError);
+                    throw profileError;
+                }
                 
+                console.log('✅ [DEBUG] Perfil inserido com sucesso:', profileData);
                 userId = profileData[0].id;
                 userProfile = profileData[0];
+                console.log('✅ [DEBUG] userId:', userId);
                 
                 // Inserir log do quiz
                 const { error: logError } = await supabase
@@ -388,11 +397,19 @@
                         score: score
                     }]);
                 
-                if(logError) throw logError;
+                if(logError) {
+                    console.error('❌ [DEBUG] Erro ao inserir log:', logError);
+                    throw logError;
+                }
+                
+                console.log('✅ [DEBUG] Log do quiz inserido com sucesso!');
+                console.log('🎉 [DEBUG] Todos os dados foram salvos no Supabase!');
+                alert('✅ Dados Salvos com Sucesso no Supabase!');
                 
             } catch(error) {
-                console.error('Erro ao salvar dados:', error);
-                alert('Erro ao salvar dados. Verifique o console.');
+                console.error('❌ [DEBUG] Erro ao salvar dados:', error);
+                console.error('❌ [DEBUG] Detalhes do erro:', error.message, error.details, error.hint);
+                alert('❌ Erro ao salvar dados. Verifique o console para detalhes.');
             }
         }
 
