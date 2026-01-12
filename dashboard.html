@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Grind | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%);
+            min-height: 100vh;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-email {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        
+        .btn-logout {
+            padding: 10px 20px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            color: #fca5a5;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+        
+        .welcome-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 12px;
+        }
+        
+        .welcome-subtitle {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .feature-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+        
+        .feature-description {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .coming-soon {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            color: #fde047;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <div class="logo-text">CYBER GRIND</div>
+            <div class="user-info">
+                <span class="user-email" id="user-email">Carregando...</span>
+                <button class="btn-logout" id="logout-btn">Sair</button>
+            </div>
+        </div>
+        
+        <div class="welcome-card">
+            <h1 class="welcome-title">Bem-vindo ao Cyber Grind!</h1>
+            <p class="welcome-subtitle">Seu sistema de treinamento profissional de poker está pronto.</p>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧬</div>
+                <h3 class="feature-title">Diagnóstico de DNA</h3>
+                <p class="feature-description">
+                    Descubra seu perfil de jogador através de 50 perguntas estratégicas e receba sua patente.
+                </p>
+                <span class="coming-soon">Em breve</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Análise de Mãos</h3>
+                <p class="feature-description">
+                    Revise suas jogadas, identifique erros e melhore sua tomada de decisão.
+                </p>
+                <span class="coming-soon">Em breve</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Treinamento GTO</h3>
+                <p class="feature-description">
+                    Pratique ranges, spots e decisões baseadas em teoria dos jogos.
+                </p>
+                <span class="coming-soon">Em breve</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 class="feature-title">Gestão de Bankroll</h3>
+                <p class="feature-description">
+                    Acompanhe seu saldo, defina metas e controle seu progresso financeiro.
+                </p>
+                <span class="coming-soon">Em breve</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3 class="feature-title">Estatísticas</h3>
+                <p class="feature-description">
+                    Visualize gráficos detalhados do seu desempenho ao longo do tempo.
+                </p>
+                <span class="coming-soon">Em breve</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">Ranking</h3>
+                <p class="feature-description">
+                    Compare seu desempenho com outros jogadores e suba no ranking.
+                </p>
+                <span class="coming-soon">Em breve</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://njrjrugjzjyukcpzwibt.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcmpydWdqemp5dWtjcHp3aWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY2NTU3MTUsImV4cCI6MjA1MjIzMTcxNX0.sb_publishable_IdBN5r7mocZmplhYOlHk9w_0krUOg_E';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        const userEmailEl = document.getElementById('user-email');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // Verificar se usuário está logado
+        async function checkAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            
+            if (!session) {
+                // Usuário não está logado, redirecionar para login
+                window.location.href = '/index.html';
+                return;
+            }
+            
+            // Exibir email do usuário
+            userEmailEl.textContent = session.user.email;
+        }
+        
+        // Logout
+        logoutBtn.addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = '/index.html';
+        });
+        
+        // Verificar autenticação ao carregar a página
+        checkAuth();
+    </script>
+</body>
+</html>
