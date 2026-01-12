@@ -483,13 +483,8 @@
         }
 
         // ==================== INICIALIZAÇÃO ====================
-        // Usar DOMContentLoaded ao invés de window.onload para execução mais rápida
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', typeManifesto);
-        } else {
-            // DOM já está pronto, executar imediatamente
-            typeManifesto();
-        }
+        // Executar imediatamente após o script carregar
+        setTimeout(typeManifesto, 100);
     </script>
 </body>
 </html>
