@@ -282,7 +282,7 @@
                 
                 if (error) {
                     if (error.message.includes('Email not confirmed')) {
-                        showError('Email não confirmado. Verifique sua caixa de entrada.');
+                        showError('Confirme seu email para acessar o sistema');
                     } else if (error.message.includes('Invalid login credentials')) {
                         showError('Email ou senha incorretos');
                     } else {
@@ -293,8 +293,15 @@
                     return;
                 }
                 
-                // Login bem-sucedido
-                localStorage.setItem('user_session', JSON.stringify(data.session));
+                // Verificar se o email foi confirmado
+                if (data.user && !data.user.email_confirmed_at) {
+                    showError('Confirme seu email para acessar o sistema');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Entrar';
+                    return;
+                }
+                
+                // Login bem-sucedido - redirecionar para dashboard
                 window.location.href = '/dashboard.html';
                 
             } catch (err) {
