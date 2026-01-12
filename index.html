@@ -483,10 +483,8 @@
         }
 
         // ==================== INICIALIZAÇÃO ====================
-        // Garantir execução após todos os recursos carregarem
-        window.addEventListener('load', function() {
-            setTimeout(typeManifesto, 100);
-        });
+        // Executar imediatamente (script já está no final do body)
+        typeManifesto();
     </script>
 </body>
 </html>
